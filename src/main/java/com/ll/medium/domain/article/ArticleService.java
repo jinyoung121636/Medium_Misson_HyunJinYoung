@@ -11,11 +11,11 @@ import java.util.Optional;
 @Service
 public class ArticleService {
     private final ArticleRepository articleRepository;
-
+    //article 리스트
     public List<Article> getList(){
         return this.articleRepository.findAll();
     }
-
+    //해당 id article 가져오기
     public Article getArticle(Integer id){
         Optional<Article> article = this.articleRepository.findById(id);
         if(article.isPresent()){

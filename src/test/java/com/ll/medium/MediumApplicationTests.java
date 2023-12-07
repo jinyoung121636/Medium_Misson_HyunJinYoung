@@ -2,6 +2,7 @@ package com.ll.medium;
 
 import com.ll.medium.domain.article.Article;
 import com.ll.medium.domain.article.ArticleRepository;
+import com.ll.medium.domain.article.ArticleService;
 import com.ll.medium.domain.comment.Comment;
 import com.ll.medium.domain.comment.CommentRepository;
 import jakarta.transaction.Transactional;
@@ -23,7 +24,8 @@ class MediumApplicationTests {
 
     @Autowired
     private ArticleRepository articleRepository;
-
+    @Autowired
+    private ArticleService articleService;
     @Autowired
     private CommentRepository commentRepository;
 
@@ -144,5 +146,17 @@ class MediumApplicationTests {
         List<Comment> commentList = article.getCommentList();
         assertEquals(1, commentList.size());
         assertEquals("생성됐습니다.", commentList.get(0).getContent());
+    }
+
+    @Test
+    @DisplayName("테스트용 데이터 생성")
+    void t13() {
+        for(int i=0; i<5; i++) {
+            Article a = new Article();
+            a.setSubject("테스트");
+            a.setContent("테스트입니다");
+            a.setCreateDate(LocalDateTime.now());
+            articleRepository.save(a);
+        }
     }
 }

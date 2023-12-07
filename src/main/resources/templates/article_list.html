@@ -1,14 +1,30 @@
-<table>
-    <thead>
-    <tr>
-        <th>제목</th>
-        <th>작성일시</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="article : ${articleList}">
-        <td><a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a></td>
-        <td th:text="${article.createDate}"></td>
-    </tr>
-    </tbody>
-</table>
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="grid grid-cols-3 gap-3">
+        <div class="mycards" th:each="article : ${articleList}">
+            <div class="card card-compact w-auto bg-base-100 shadow-xl">
+                <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
+                <div class="card-body">
+                        <h2 class="text-lg"><a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a></h2>
+                        <p th:text="${article.content}"></p>
+                        <footer class="flex justify-content-between border-top">
+                        <div>
+                            <i class="fa-solid fa-heart text-red-500"></i>
+                            <span class="text-sm text-black-500" th:if="${#lists.size(article.commentList)>0}"
+                              th:text="${#lists.size(article.commentList)}"></span>
+                            <!--나중에 좋아요 수로 바꾸기-->
+                            <i class="fa-regular fa-comment ms-1"></i>
+                            <span class="text-sm text-black-500" th:if="${#lists.size(article.commentList)>0}"
+                                  th:text="${#lists.size(article.commentList)}"></span>
+
+                        </div>
+                        <div>
+                            <div class="justify-content-between" th:text="${#temporals.format(article.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                        </div>
+                        </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>
