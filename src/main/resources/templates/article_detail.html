@@ -1,0 +1,14 @@
+<h1 th:text="${article.subject}"></h1>
+<div th:text="${article.content}"></div>
+
+<h5 th:text="|${#lists.size(article.commentList)}개의 답변이 있습니다.|"></h5>
+<div>
+    <ul>
+        <li th:each="comment : ${article.commentList}" th:text="${comment.content}"></li>
+    </ul>
+</div>
+
+<from th:action="@{|comment/create/${article.id}|}" method="post">
+    <textarea name="content" id="content" rows="5"></textarea>
+    <input type="submit" value="답변등록">
+</from>
