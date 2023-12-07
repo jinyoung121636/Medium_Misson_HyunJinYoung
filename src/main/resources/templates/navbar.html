@@ -6,9 +6,9 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
       </div>
       <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a></li>
-        <li><a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a></li>
-        <li><a sec:authorize="isAnonymous()">회원가입</a></li>
+        <li><a th:href="@{/user/login}">로그인</a></li>
+        <li><a th:href="@{/user/logout}">로그아웃</a></li>
+        <li><a>회원가입</a></li>
       </ul>
     </div>
   </div>
