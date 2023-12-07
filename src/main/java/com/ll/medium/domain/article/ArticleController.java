@@ -42,6 +42,6 @@ public class ArticleController {
             return "article_form";
         }
         this.articleService.create(articleForm.getSubject(), articleForm.getContent());
-        return "redirect:/article/list/";
+        return "redirect:/article/list";
     }
 }
