@@ -1,0 +1,27 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+  <div class="border-bottom pb-2 d-flex justify-content-between">
+    <h5 class="my-3 font-bold text-black">
+      <i class="fa-regular fa-pen-to-square"></i> 글쓰기</h5>
+    <div class="click bg-ghost" onclick="goBack()">
+      <h5 class="hover:text-blue-600 my-3 font-bold text-gray-400">
+        <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i> 나가기</h5>
+    </div>
+  </div>
+  <!--글쓰기 폼-->
+  <form th:action="@{/article/create}" th:object="${articleForm}" method="post">
+    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+      <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+    </div>
+    <div class="mt-1 mb-3">
+      <label for="subject" class="form-label">제목</label>
+      <input type="text" th:field="*{subject}" name="subject" id="subject" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">내용</label>
+      <textarea th:field="*{content}" name="content" id="content" class="form-control" rows="15"></textarea>
+    </div>
+    <input type="submit" value="게시하기" class="btn btn-primary my-2">
+  </form>
+</div>
+</html>
