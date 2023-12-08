@@ -1,4 +1,4 @@
-package com.ll.medium.domain.article;
+package com.ll.medium.domain.post;
 
 import com.ll.medium.domain.comment.Comment;
 import jakarta.persistence.*;
@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Article {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,6 +24,6 @@ public class Article {
 
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
 }

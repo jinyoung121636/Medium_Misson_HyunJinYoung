@@ -1,4 +1,4 @@
-package com.ll.medium.domain.article;
+package com.ll.medium.domain.post;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ArticleForm {
+public class PostForm {
     @NotEmpty(message = "제목은 필수항목입니다.")
     @Size(max = 200)
     private String subject;

@@ -10,6 +10,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String root(){
-        return "redirect:/article/list";
+        return "redirect:/post/list";
     }
 }

@@ -1,6 +1,6 @@
 package com.ll.medium.domain.comment;
 
-import com.ll.medium.domain.article.Article;
+import com.ll.medium.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +23,5 @@ public class Comment {
     private LocalDateTime createDate;
 
     @ManyToOne
-    private Article article;
+    private Post post;
 }

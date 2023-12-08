@@ -1,0 +1,26 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <div class="pb-2 d-flex justify-content-end">
+        <div class="click bg-ghost" onclick="goBack()">
+            <h5 class="hover:text-blue-600 my-3 font-bold text-gray-400">
+                <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i> 나가기</h5>
+        </div>
+    </div>
+
+<div th:text="${post.subject}"></div>
+<div th:text="${post.content}"></div>
+<div th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+<h5 th:text="|${#lists.size(post.commentList)}개의 답변이 있습니다.|"></h5>
+<div>
+    <ul>
+        <li th:each="comment : ${post.commentList}" th:text="${comment.content}"></li>
+    </ul>
+</div>
+<!--답변작성-->
+<form th:action="@{|/comment/create/${post.id}|}" method="post" th:object="${commentForm}">
+    <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+    <textarea th:field="*{content}" name="content" id="content" rows="5"></textarea>
+    <input type="submit" value="댓글등록">
+</form>
+</div>
+</html>

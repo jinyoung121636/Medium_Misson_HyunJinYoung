@@ -9,9 +9,8 @@
     </div>
   </div>
   <!--글쓰기 폼-->
-  <form th:action="@{/article/create}" th:object="${articleForm}" method="post">
-    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-      <div th:each="err : ${#fields.allErrors()}" th:text="${err}" /></div>
+  <form th:action="@{/post/create}" th:object="${postForm}" method="post">
+    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}"></div>
     <div class="mt-1 mb-3">
       <label for="subject" class="form-label">제목</label>
       <input type="text" th:field="*{subject}" name="subject" id="subject" class="form-control">

@@ -1,25 +1,24 @@
-package com.ll.medium.domain.user;
+package com.ll.medium.domain.member;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
-    private final UserRepository userRepository;
+public class MemberService {
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public SiteUser create(
+    public SiteMember create(
             String username,
             String emaill,
             String password){
-        SiteUser user = new SiteUser();
+        SiteMember user = new SiteMember();
         user.setUsername(username);
         user.setEmail(emaill);
         user.setPassword(passwordEncoder.encode(password));
-        this.userRepository.save(user);
+        this.memberRepository.save(user);
         return user;
     }
 }
