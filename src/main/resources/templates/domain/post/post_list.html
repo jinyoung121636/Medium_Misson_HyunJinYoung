@@ -1,11 +1,12 @@
 <html layout:decorate="~{layout}">
-<div layout:fragment="content" class="container my-3">
-    <div class="grid grid-cols-3 gap-3">
+<div layout:fragment="content" class="container my-5">
+    <div class="grid grid-cols-1">
         <div class="mycards" th:each="post : ${postList}">
+            <a th:href="@{|/post/detail/${post.id}|}">
             <div class="card card-compact w-auto bg-base-100 shadow-xl">
                 <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
                 <div class="card-body">
-                        <h2 class="text-lg"><a th:href="@{|/post/detail/${post.id}|}" th:text="${post.subject}"></a></h2>
+                        <h2 class="text-lg"><p th:text="${post.subject}"></p></h2>
                         <p th:text="${post.content}"></p>
                         <footer class="flex justify-content-between border-top">
                         <div>
@@ -26,6 +27,7 @@
                         </footer>
                 </div>
             </div>
+            </a>
         </div>
     </div>
 </div>

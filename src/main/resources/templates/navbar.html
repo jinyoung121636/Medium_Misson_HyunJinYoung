@@ -16,11 +16,11 @@
     <a href="/" class="btn btn-ghost text-xl">Medium</a>
   </div>
   <div>
-    <button>
-      <a th:href="@{/post/create}" class="badge badge-outline">글 쓰기</a>
-    </button>
+      <button>
+        <a sec:authorize="isAuthenticated()" th:href="@{/post/create}" class="badge badge-outline p-3">글 쓰기</a>
+      </button>
     <button class="ms-2">
-      <i class="fa-solid fa-circle-user fa-2xl"></i>
+      <i class="fa-solid fa-circle-user fa-2xl" sec:authorize="isAuthenticated()"></i>
     </button>
   </div>
 </nav>

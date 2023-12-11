@@ -1,13 +1,15 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
     <div class="pb-2 d-flex justify-content-end">
-        <div class="click bg-ghost" onclick="goBack()">
+        <div class="click bg-ghost">
+            <a th:href="@{/post/list}">
             <h5 class="hover:text-blue-600 my-3 font-bold text-gray-400">
                 <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i> 나가기</h5>
+            </a>
         </div>
     </div>
     <!--로그인 폼-->
-    <form style="width: 300px" class="m-auto" th:action="@{/member/login}" method="post">
+    <form style="width: 320px" class="m-auto" th:action="@{/member/login}" method="post">
         <div th:if="${param.error}">
             <div class="alert alert-danger">
                 사용자 ID 또는 비밀번호를 확인해 주세요.
