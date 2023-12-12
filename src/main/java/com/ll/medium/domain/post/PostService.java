@@ -1,6 +1,7 @@
 package com.ll.medium.domain.post;
 
 import com.ll.medium.DataNotFoundException;
+import com.ll.medium.domain.member.SiteMember;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,11 +34,12 @@ public class PostService {
     }
 
     // post 생성
-    public void create(String subject, String content){
+    public void create(String subject, String content, SiteMember member){
         Post post = new Post();
         post.setSubject(subject);
         post.setContent(content);
         post.setCreateDate(LocalDateTime.now());
+        post.setAuthor(member);
         this.postRepository.save(post);
     }
 

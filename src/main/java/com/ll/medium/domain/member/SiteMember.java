@@ -19,7 +19,7 @@ public class SiteMember {
     private Long id;
 
     @Column(unique = true)
-    private String username;
+    private String membername;
 
     private String password;
 
