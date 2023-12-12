@@ -1,4 +1,5 @@
-<nav th:fragment="navbarFragment" class="navbar bg-base-100 d-flex">
+<nav th:fragment="navbarFragment" class="navbar bg-base-100 d-flex justify-content-center">
+  <div class="justify-content-between" style="width: 700px;">
   <div>
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
@@ -6,9 +7,8 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
       </div>
       <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a sec:authorize="isAnonymous()" th:href="@{/member/login}"><i class="fa-solid fa-right-from-bracket"></i> 로그인</a></li>
-        <li><a sec:authorize="isAuthenticated()" th:href="@{/member/logout}"><i class="fa-solid fa-right-from-bracket"></i> 로그아웃</a></li>
-        <li><a sec:authorize="isAnonymous()" th:href="@{/member/join}"><i class="fa-solid fa-user-plus"></i>회원가입</a></li>
+        <li><a>공지사항</a></li>
+        <li><a>문의하기</a></li>
       </ul>
     </div>
   </div>
@@ -17,10 +17,20 @@
   </div>
   <div>
       <button>
+        <a  sec:authorize="isAnonymous()" th:href="@{/member/login}" class="badge badge-outline p-3">로그인</a>
+      </button>
+      <button>
         <a sec:authorize="isAuthenticated()" th:href="@{/post/create}" class="badge badge-outline p-3">글 쓰기</a>
       </button>
-    <button class="ms-2">
-      <i class="fa-solid fa-circle-user fa-2xl" sec:authorize="isAuthenticated()"></i>
-    </button>
+    <div class="dropdown dropdown-end" sec:authorize="isAuthenticated()">
+      <button tabindex="0" class="btn m-1 bg-transparent border-0 btn-outline-none">
+        <i class="fa-solid fa-circle-user fa-2xl"></i>
+      </button>
+      <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        <li><a sec:authorize="isAuthenticated()"><i class="fa-solid fa-list-ul"></i>내 글 목록</a></li>
+        <li><a sec:authorize="isAuthenticated()" th:href="@{/member/logout}"><i class="fa-solid fa-right-from-bracket fa-rotate-180"></i> 로그아웃</a></li>
+      </ul>
+    </div>
+  </div>
   </div>
 </nav>

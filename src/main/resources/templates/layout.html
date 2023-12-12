@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
 </head>
 <body>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.14/dist/full.min.css" rel="stylesheet" type="text/css" />
@@ -34,6 +33,23 @@
     function goBack() {
         window.history.back();
     }
+
+    const toggleButton = document.getElementById('toggle-button');
+    const counterElement = document.getElementById('counter');
+
+    let count = 0;
+
+    toggleButton.addEventListener('click', function () {
+        count = 1-count; // 0과 1을 토글
+        counterElement.innerText = count;
+
+        // 'clicked' 클래스를 토글하여 스타일 변경
+        toggleButton.classList.toggle('clicked');
+
+        // 숫자와 하트 아이콘의 색상을 변경
+        counterElement.style.color = count ? '#000' : '#6c757d';
+        document.getElementById('heart-icon').style.color = count ? '#d9534f' : '#6c757d';
+    });
 </script>
 <!-- 자바스크립트 End -->
 </body>

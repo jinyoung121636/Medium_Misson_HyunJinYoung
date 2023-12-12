@@ -1,5 +1,42 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-5">
+    <div class="flex justify-content-center">
+    <div class="flex justify-content-between align-items-end" style="width: 680px">
+        <div>
+        <button class="link-primary">
+            전체 글 /
+        </button>
+        <button class="link-primary">
+            최신 글
+        </button>
+        </div>
+        <!-- 검색기능 -->
+        <div class="join">
+            <div>
+                <div style="width: 200px;">
+                    <input class="input input-bordered join-item" placeholder="Search"/>
+                </div>
+            </div>
+            <select class="select select-bordered join-item custom-select" style="width: 100px">
+                <option disabled selected>Filter</option>
+                <option >제목</option>
+                <option >내용</option>
+                <option >제목+내용</option>
+                <option >제목+내용+작성자</option>
+            </select>
+            <select class="select select-bordered join-item" style="width: 100px;">
+                <option disabled selected>Filter</option>
+                <option>최신순</option>
+                <option>오래된순</option>
+                <option>조회수 높은순</option>
+                <option>조회수 낮은순</option>
+            </select>
+            <div class="indicator">
+                <button class="btn join-item" style="height: 30px">찾기</button>
+            </div>
+        </div>
+    </div>
+    </div>
     <div class="flex flex-column align-items-center">
         <div class="mycards" th:each="post : ${postList}">
             <a th:href="@{|/post/detail/${post.id}|}">
