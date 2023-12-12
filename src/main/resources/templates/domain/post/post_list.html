@@ -4,7 +4,9 @@
     <div class="flex justify-content-between align-items-end" style="width: 680px">
         <div>
         <button class="link-primary">
+            <a th:href="@{/post/list}">
             전체 글 /
+            </a>
         </button>
         <button class="link-primary">
             최신 글
@@ -78,6 +80,7 @@
                 </a>
             </li>
             <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
+                th:if="${page >= paging.number-5 and page <= paging.number+5}"
                 th:classappend="${page == paging.number} ? 'active'"
                 class="page-item">
                 <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
