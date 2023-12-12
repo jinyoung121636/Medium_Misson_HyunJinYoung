@@ -1,6 +1,7 @@
 package com.ll.medium.domain.post;
 
 import com.ll.medium.domain.comment.Comment;
+import com.ll.medium.domain.member.SiteMember;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,4 +27,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> commentList;
+
+    @ManyToOne
+    private SiteMember author;
 }
