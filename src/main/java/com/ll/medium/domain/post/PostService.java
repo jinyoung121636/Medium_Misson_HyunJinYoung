@@ -50,9 +50,8 @@ public class PostService {
         return this.postRepository.findAll(pageable);
     }
 
-    // post 최신글 30개 가져오기
-//    public Post getNewList(LocalDateTime){
-//        Pageable pageable = PageRequest.of(page, 30);
-//        return this.postRepository.findAll(pageable);
-//    }
+//     post 최신글 30개 가져오기
+    public List<Post> getNewList(){
+        return postRepository.findTop30ByOrderByCreateDateDesc();
+    }
 }

@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -24,6 +27,13 @@ public class PostController {
         Page<Post> paging = this.postService.getList(page);
         model.addAttribute("paging",paging);
         return "domain/post/post_list";
+    }
+
+    @GetMapping("/new")
+    public String getNewPost(Model model){
+        List<Post> newlist = this.postService.getNewList();
+        model.addAttribute("newlist",newlist);
+        return "domain/post/post_new";
     }
 
     @GetMapping(value = "/detail/{id}")

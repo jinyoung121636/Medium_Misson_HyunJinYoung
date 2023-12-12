@@ -42,7 +42,7 @@
     </div>
     </div>
     <div class="flex flex-column align-items-center">
-        <div class="mycards" th:each="post, loop : ${paging}">
+        <div class="mycards" th:each="post, loop : ${newlist}">
             <a th:href="@{|/post/detail/${post.id}|}">
             <div class="card bg-base-100 hover:bg-yellow-50 mt-3" style="width: 700px">
                 <div class="card-body py-3">
@@ -72,28 +72,5 @@
             </a>
         </div>
     </div>
-<!--post 페이징 시작-->
-    <div class="mt-4" th:if="${!paging.isEmpty()}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-                <a class="page-link"
-                   th:href="@{|?page=${paging.number-1}|}">
-                    <span><</span>
-                </a>
-            </li>
-            <li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}"
-                th:if="${page >= paging.number-5 and page <= paging.number+5}"
-                th:classappend="${page == paging.number} ? 'active'"
-                class="page-item">
-                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
-            </li>
-            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
-                    <span>></span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- 페이징처리 끝 -->
 </div>
 </html>

@@ -16,17 +16,18 @@
         </div>
     </div>
     <div class="flex justify-content-end">
-    <div class="mr-2">수정</div>
-    <div>삭제</div>
+        <div class="click mr-2 text-gray-400 hover:text-black">수정</div>
+        <div class="click text-gray-400 hover:text-black">삭제</div>
     </div>
 <!-- post 내용-->
-    <div class="fs-5 border-top border-bottom border-dark" style="min-height: 250px; height: fit-content;" th:text="${post.content}"></div>
+    <div class="fs-5 border-top border-bottom border-dark mt-3 mb-3 pt-3 pb-3" style="min-height: 250px; height: fit-content;" th:text="${post.content}"></div>
 <!-- 답변 수-->
     <div class="text-red-500 mt-4 mb-4">
-        <h5 th:text="|${#lists.size(post.commentList)}개의 답변이 있습니다.|"></h5>
+        <h5 th:if="${#lists.size(post.commentList)} == 0">댓글이 없습니다.</h5>
+        <h5 th:if="${#lists.size(post.commentList)} > 0" th:text="|${#lists.size(post.commentList)}개의 댓글이 있습니다.|"></h5>
     </div>
 <!--답변리스트-->
-<div class="border rounded mb-4 p-1 border-primary bg-blue-50">
+<div th:if="${#lists.size(post.commentList)} != 0" class="border rounded mb-4 p-1 border-primary bg-blue-50">
     <div class="d-flex justify-content-between align-items-center" style="height: 60px">
         <div>
             <span class="fs-3 mr-3" th:text="${post.subject}"></span>
@@ -45,8 +46,8 @@
                 <li th:each="comment : ${post.commentList}" th:text="${comment.content}"></li>
             </ul>
         </div>
-        <div class="mr-2">수정</div>
-        <div>삭제</div>
+        <div class="click mr-2 text-gray-400 hover:text-black">수정</div>
+        <div class="click text-gray-400 hover:text-black">삭제</div>
     </div>
 </div>
 
@@ -54,7 +55,7 @@
     <form th:action="@{|/comment/create/${post.id}|}" method="post" th:object="${commentForm}">
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <div class="flex-column" >
-        <span><textarea placeholder="댓글을 입력하세요" class="bg-gray-50 rounded-2" style="width: 700px; min-height:200px; " th:field="*{content}" name="content" id="content"></textarea></span>
+        <span><textarea placeholder="댓글을 입력하세요" class="bg-gray-100 rounded-2" style="width: 700px; min-height:200px; " th:field="*{content}" name="content" id="content"></textarea></span>
         <span class="flex justify-content-end"><input type="submit" value="댓글등록"></span>
         </div>
     </form>
