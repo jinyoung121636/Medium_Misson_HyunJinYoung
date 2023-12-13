@@ -7,6 +7,7 @@ import com.ll.medium.domain.member.MemberService;
 import com.ll.medium.domain.member.SiteMember;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -129,10 +131,14 @@ public class PostController {
     }
 
     // mylist
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/mylist")
-    public String getmylist(Model model){
-        List<Post> mylist = this.postService.getMylist("user1");
-        model.addAttribute("mylist",mylist);
+    public String getmylist(Model model, Principal principal){
+            // 현재 인증된 사용자의 이름 가져옴
+            String membername = principal.getName();
+            List<Post> mylist = this.postService.getMylist(membername);
+            model.addAttribute("mylist", mylist);
+
         return "domain/post/post_mylist";
     }
 

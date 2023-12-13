@@ -169,7 +169,7 @@ class MediumApplicationTests {
     @Test
     @DisplayName("테스트용 데이터 생성")
     void t14() {
-        SiteMember member = this.memberService.getMember("user1");
+        SiteMember member = this.memberService.getMember("user2");
         for(int i=0; i<5; i++) {
             Post a = new Post();
             a.setAuthor(member);
