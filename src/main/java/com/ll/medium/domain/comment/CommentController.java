@@ -42,4 +42,7 @@ public class CommentController {
         Comment comment = this.commentService.create(post, commentForm.getContent(), siteMember);
         return String.format("redirect:/post/detail/%s", id);
     }
+
+
+
 }

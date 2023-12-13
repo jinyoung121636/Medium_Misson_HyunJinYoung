@@ -53,7 +53,17 @@ public class PostService {
     }
 
 //     post 최신글 30개 가져오기
-    public List<Post> getNewList(){
-        return postRepository.findTop30ByOrderByCreateDateDesc();
+    public List<Post> getNewList(){return postRepository.findTop30ByOrderByCreateDateDesc();}
+
+    // post 수정
+    public void modify(Post post, String subject, String content){
+        post.setSubject(subject);
+        post.setContent(content);
+        this.postRepository.save(post);
+    }
+
+    //post 삭제
+    public void delete(Post post){
+        this.postRepository.delete(post);
     }
 }

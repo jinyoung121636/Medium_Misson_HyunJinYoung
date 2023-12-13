@@ -5,7 +5,7 @@
     <div class="fs-1" th:text="${post.subject}"></div>
     <div class="d-flex justify-content-between align-items-center">
         <div>
-        <span class="fs-4 mr-3 text-gray-500" th:if="${post.author != null}" th:text="${post.author.membername}"></span>
+        <span class="fs-4 mr-3 text-gray-400" th:if="${post.author != null}" th:text="${post.author.membername}"></span>
         <span class="text-gray-300" th:text="${#temporals.format(post.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
         </div>
         <div id="counter-container" style="height: 60px" class="bg-transparent">
@@ -22,27 +22,26 @@
                 수정
             </a>
         </div>
-        <div class="click text-gray-400 hover:text-black">
-            <a th:href="@{|/post/delete/${post.id}|}" sec:authorize="isAuthenticated()"
+        <div class="click mr-2 text-gray-400 hover:text-black">
+            <a href="javascript:void(0)" th:data-uri="@{|/post/delete/${post.id}|}" class="delete" sec:authorize="isAuthenticated()"
                th:if="${post.author != null and #authentication.getPrincipal().getUsername() == post.author.membername}">
                 삭제
             </a>
         </div>
     </div>
 <!-- post 내용-->
-    <div class="fs-5 border-top border-bottom border-dark mt-3 mb-3 pt-3 pb-3" style="min-height: 250px; height: fit-content;" th:text="${post.content}"></div>
+    <div class="fs-5 border-top border-bottom border-dark mt-3 pt-3 pb-3" style="min-height: 250px; height: fit-content;" th:text="${post.content}"></div>
 <!-- 답변 수-->
-    <div class="text-red-500 mt-4 mb-4">
-        <h5 th:if="${#lists.size(post.commentList)} == 0">댓글이 없습니다.</h5>
-        <h5 th:if="${#lists.size(post.commentList)} > 0" th:text="|${#lists.size(post.commentList)}개의 댓글이 있습니다.|"></h5>
+    <div class="text-red-500 pt-3 pb-3 border-bottom border-dark bg-yellow-50" style="padding-left: 5px">
+        <h5 th:text="|답글 : ${#lists.size(post.commentList)}|"></h5>
     </div>
 <!--답변리스트-->
 <div th:if="${#lists.size(post.commentList)} != 0" th:each="comment : ${post.commentList}"
-     class="border rounded mb-4 p-1 border-primary bg-blue-50">
+     class="border-bottom p-1 border-dark" >
     <div class="d-flex justify-content-between align-items-center" style="height: 60px">
-        <div>
-            <span class="fs-4 mr-3 text-blue-400" th:if="${comment.author != null}" th:text="${comment.author.membername}"></span>
-            <span class="text-gray-400" th:text="${#temporals.format(post.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
+        <div style="margin-left: 5px">
+            <span class="fs-4 mr-3 text-gray-400" th:if="${comment.author != null}" th:text="${comment.author.membername}"></span>
+            <span class="text-gray-300" th:text="${#temporals.format(post.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
         </div>
         <div id="counter-container" class="flex align-items-center bg-transparent">
             <button id="toggle-button" class="bg-transparent">
@@ -52,28 +51,30 @@
         </div>
     </div>
     <div class="flex justify-content-end">
-        <div class="fs-5 flex-grow-1">
-            <ul>
-                <li th:text="${comment.content}"></li>
-            </ul>
-        </div>
         <div class="click mr-2 text-gray-400 hover:text-black">
             <a th:href="@{|/comment/modify/${comment.id}|}" sec:authorize="isAuthenticated()"
                th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.membername}">
                 수정
             </a>
         </div>
-        <div class="click text-gray-400 hover:text-black">
-            <a th:href="@{|/comment/delete/${comment.id}|}" sec:authorize="isAuthenticated()"
+        <div class="click mr-2 text-gray-400 hover:text-black">
+            <a href="javascript:void(0)" class="delete" th:href="@{|/comment/delete/${comment.id}|}" sec:authorize="isAuthenticated()"
                th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.membername}">
                 삭제
             </a>
         </div>
     </div>
+    <div>
+        <div class="fs-5 mt-2 mb-2" style="margin-left: 5px; margin-right: 5px;">
+            <ul>
+                <li th:text="${comment.content}"></li>
+            </ul>
+        </div>
+    </div>
 </div>
 
 <!--답변작성-->
-    <form th:action="@{|/comment/create/${post.id}|}" method="post" th:object="${commentForm}">
+    <form class="mt-4" th:action="@{|/comment/create/${post.id}|}" method="post" th:object="${commentForm}">
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
         <div class="flex-column" >
         <span><textarea placeholder="댓글을 입력하세요" class="bg-gray-100 rounded-2" style="width: 700px; min-height:200px; " th:field="*{content}" name="content" id="content"></textarea></span>
@@ -82,4 +83,14 @@
     </form>
 </div>
 </div>
+<script layout:fragment="script" type='text/javascript'>
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            if(confirm("정말로 삭제하시겠습니까?")) {
+                location.href = this.dataset.uri;
+            };
+        });
+    });
+</script>
 </html>
