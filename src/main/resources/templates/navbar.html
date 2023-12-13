@@ -27,7 +27,7 @@
         <i class="fa-solid fa-circle-user fa-2xl"></i>
       </button>
       <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a sec:authorize="isAuthenticated()"><i class="fa-solid fa-list-ul"></i>내 글 목록</a></li>
+        <li><a sec:authorize="isAuthenticated()" th:href="@{/post/mylist}"><i class="fa-solid fa-list-ul"></i>내 글 목록</a></li>
         <li><a sec:authorize="isAuthenticated()" th:href="@{/member/logout}"><i class="fa-solid fa-right-from-bracket fa-rotate-180"></i> 로그아웃</a></li>
       </ul>
     </div>

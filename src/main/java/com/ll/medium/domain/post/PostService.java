@@ -66,4 +66,9 @@ public class PostService {
     public void delete(Post post){
         this.postRepository.delete(post);
     }
+
+    // mylist
+    public List<Post> getMylist(String membername){
+
+        return postRepository.findByAuthorMembername(membername);}
 }

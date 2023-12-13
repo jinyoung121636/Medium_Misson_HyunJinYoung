@@ -14,6 +14,7 @@ import java.util.Optional;
 public class CommentService {
     private final CommentRepository commentRepository;
 
+    //comment 생성
     public Comment create(Post post, String content, SiteMember siteMember) {
         Comment comment = new Comment();
         comment.setContent(content);
@@ -23,7 +24,7 @@ public class CommentService {
         this.commentRepository.save(comment);
         return comment;
     }
-    // 코멘트 가져오기
+    // comment 가져오기
     public Comment getComment(Integer id){
         Optional<Comment> comment = this.commentRepository.findById(id);
         if(comment.isPresent()){
@@ -33,5 +34,16 @@ public class CommentService {
         }
     }
 
+    //comment 수정
+    public void modify(Comment comment, String content){
+        comment.setContent(content);
+        this.commentRepository.save(comment);
+        // 새 객체를 만들지 않은 이유는 위에 객체가 생성되어있기때문에
+        // 객체를 만들면 새로운 이름으로 comment가 기록된다.
+    }
+
+    public void delete(Comment comment){
+        this.commentRepository.delete(comment);
+    }
 
 }

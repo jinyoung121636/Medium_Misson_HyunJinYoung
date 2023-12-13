@@ -28,6 +28,7 @@ public class PostController {
     private final MemberService memberService;
     private final CommentService commentService;
 
+    // post / list
     @GetMapping("/list")
     public String list(
             Model model,
@@ -38,6 +39,7 @@ public class PostController {
         return "domain/post/post_list";
     }
 
+    // 최신글 보기
     @GetMapping("/new")
     public String getNewPost(Model model){
         List<Post> newlist = this.postService.getNewList();
@@ -45,6 +47,7 @@ public class PostController {
         return "domain/post/post_new";
     }
 
+    // 글 상세보기
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id")Integer id, CommentForm commentForm){
         Post post = this.postService.getPost(id);
@@ -52,6 +55,7 @@ public class PostController {
         return "domain/post/post_detail";
     }
 
+    // 글 생성
     @GetMapping(value = "/create")
     public String postCreate(PostForm postForm){
         return "/domain/post/post_form";
@@ -72,6 +76,7 @@ public class PostController {
         return "redirect:/post/list";
     }
 
+    // 글 수정(get)
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String postModify(
@@ -88,6 +93,7 @@ public class PostController {
         return "domain/post/post_form";
     }
 
+    // 글 수정 (post)
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
     public String postModify(
@@ -107,6 +113,7 @@ public class PostController {
         return String.format("redirect:/post/detail/%s", id);
     }
 
+    // 글 삭제
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
     public String postDelete(
@@ -120,4 +127,13 @@ public class PostController {
         this.postService.delete(post);
         return "redirect:/";
     }
+
+    // mylist
+    @GetMapping("/mylist")
+    public String getmylist(Model model){
+        List<Post> mylist = this.postService.getMylist("user1");
+        model.addAttribute("mylist",mylist);
+        return "domain/post/post_mylist";
+    }
+
 }

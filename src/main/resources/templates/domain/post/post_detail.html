@@ -30,17 +30,19 @@
         </div>
     </div>
 <!-- post 내용-->
-    <div class="fs-5 border-top border-bottom border-dark mt-3 pt-3 pb-3" style="min-height: 250px; height: fit-content;" th:text="${post.content}"></div>
+    <div class="fs-5 border-top border-dark pt-3 pb-3" style="min-height: 250px; height: fit-content;" th:text="${post.content}"></div>
 <!-- 답변 수-->
-    <div class="text-red-500 pt-3 pb-3 border-bottom border-dark bg-yellow-50" style="padding-left: 5px">
-        <h5 th:text="|답글 : ${#lists.size(post.commentList)}|"></h5>
+    <div class="border-dark border-bottom">
+    <div class="badge badge-outline mb-2" style="padding-left: 5px">
+        <h5 class="text-red-500" th:text="|답글 : ${#lists.size(post.commentList)}|"></h5>
+    </div>
     </div>
 <!--답변리스트-->
 <div th:if="${#lists.size(post.commentList)} != 0" th:each="comment : ${post.commentList}"
      class="border-bottom p-1 border-dark" >
     <div class="d-flex justify-content-between align-items-center" style="height: 60px">
         <div style="margin-left: 5px">
-            <span class="fs-4 mr-3 text-gray-400" th:if="${comment.author != null}" th:text="${comment.author.membername}"></span>
+            <span class=" fs-4 mr-3 text-gray-400" th:if="${comment.author != null}" th:text="${comment.author.membername}"></span>
             <span class="text-gray-300" th:text="${#temporals.format(post.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
         </div>
         <div id="counter-container" class="flex align-items-center bg-transparent">
@@ -58,7 +60,7 @@
             </a>
         </div>
         <div class="click mr-2 text-gray-400 hover:text-black">
-            <a href="javascript:void(0)" class="delete" th:href="@{|/comment/delete/${comment.id}|}" sec:authorize="isAuthenticated()"
+            <a href="javascript:void(0)" class="delete" th:data-uri="@{|/comment/delete/${comment.id}|}" sec:authorize="isAuthenticated()"
                th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.membername}">
                 삭제
             </a>
@@ -83,14 +85,4 @@
     </form>
 </div>
 </div>
-<script layout:fragment="script" type='text/javascript'>
-    const delete_elements = document.getElementsByClassName("delete");
-    Array.from(delete_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            if(confirm("정말로 삭제하시겠습니까?")) {
-                location.href = this.dataset.uri;
-            };
-        });
-    });
-</script>
 </html>
