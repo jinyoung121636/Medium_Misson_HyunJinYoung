@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,4 +29,7 @@ public class Comment {
 
     @ManyToOne
     private SiteMember author;
+
+    @ManyToMany
+    Set<SiteMember> voter;
 }

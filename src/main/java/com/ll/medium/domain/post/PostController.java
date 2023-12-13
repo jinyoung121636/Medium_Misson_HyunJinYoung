@@ -146,9 +146,21 @@ public class PostController {
         return "domain/post/post_mylist";
     }
 
-//    @PostMapping("/savePost")
-//    public String savePost(@ModelAttribute("post") Post post){
-//        postService.save(post);
-//        return "redirect:/post/list";
-//    }
+    @GetMapping(value = "detail/{id}/like")
+    public String postLike(Model model, @PathVariable("id")Integer id, PostForm postForm){
+        postService.increaseLikeCount(id);
+        Post post = this.postService.getPost(id);
+        model.addAttribute("post", post);
+        return "redirect:/post/detail/{id}";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/like")
+    public String postVote(Principal principal, @PathVariable("id") Integer id){
+        Post post = this.postService.getPost(id);
+        SiteMember siteMember = this.memberService.getMember(principal.getName());
+        this.postService.vote(post, siteMember);
+        return String.format("redirect:/post/detail/%s", id);
+    }
+
 }

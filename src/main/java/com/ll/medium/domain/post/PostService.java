@@ -88,6 +88,7 @@ public class PostService {
         postRepository.save(post);
     }
 
+    //좋아요
     @Transactional
     public void increaseLikeCount(Integer postId) {
         Post post = postRepository.findById(postId)
@@ -95,5 +96,10 @@ public class PostService {
 
         post.increaseLikeCount();
         postRepository.save(post);
+    }
+
+    public void vote(Post post, SiteMember siteMember){
+        post.getVoter().add(siteMember);
+        this.postRepository.save(post);
     }
 }

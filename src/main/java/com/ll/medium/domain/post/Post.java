@@ -3,12 +3,12 @@ package com.ll.medium.domain.post;
 import com.ll.medium.domain.comment.Comment;
 import com.ll.medium.domain.member.SiteMember;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -44,8 +44,15 @@ public class Post {
         this.viewCount = (this.viewCount == null) ? 1 : this.viewCount+1;
     }
 
-    public void increaseLikeCount() {
+    @Column(name = "like_count")
+    private Integer likecount = 0;
+
+    public void increaseLikeCount(){
+        this.likecount = (this.likecount == null) ? 0 : this.likecount+1;
     }
+
+    @ManyToMany
+    Set<SiteMember> voter;
 
 //    @Column(name = "IS_PUBLISHED", nullable = true)
 //    private boolean isPublished;

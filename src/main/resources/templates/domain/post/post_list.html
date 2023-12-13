@@ -55,15 +55,15 @@
                         <div>
                             <!--좋아요 수-->
                             <i class="fa-solid fa-heart text-red-500"></i>
-                            <span class="text-sm text-black-500" th:if="${#lists.size(post.commentList)>0}"
-                              th:text="${#lists.size(post.commentList)}"></span>
+                            <span class="text-sm text-black-500" th:if="${#lists.size(post.voter)>0}"
+                                  th:text="${#lists.size(post.voter)}"></span>
                             <!--댓글 수-->
                             <i class="fa-regular fa-comment ms-1"></i>
                             <span class="text-sm text-black-500" th:if="${#lists.size(post.commentList)>0}"
                                   th:text="${#lists.size(post.commentList)}"></span>
                             <!--조회수-->
                             <i class="fa-solid fa-eye ms-1" style="color: dimgray"></i>
-                            <span class="text-sm text-black-500"
+                            <span class="text-sm text-black-500" th:if="${post.viewCount > 0}"
                                   th:text="${post.viewCount}"></span>
                         </div>
                         <div>
