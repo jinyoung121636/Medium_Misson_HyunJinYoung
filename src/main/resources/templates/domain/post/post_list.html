@@ -63,6 +63,8 @@
                                   th:text="${#lists.size(post.commentList)}"></span>
                             <!--조회수-->
                             <i class="fa-solid fa-eye ms-1" style="color: dimgray"></i>
+                            <span class="text-sm text-black-500"
+                                  th:text="${post.viewCount}"></span>
                         </div>
                         <div>
                             <div class="justify-content-between" th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></div>

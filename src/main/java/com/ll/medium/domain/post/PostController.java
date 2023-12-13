@@ -5,10 +5,12 @@ import com.ll.medium.domain.comment.CommentForm;
 import com.ll.medium.domain.comment.CommentService;
 import com.ll.medium.domain.member.MemberService;
 import com.ll.medium.domain.member.SiteMember;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -52,17 +54,19 @@ public class PostController {
     // 글 상세보기
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id")Integer id, CommentForm commentForm){
+        postService.increaseViewCount(id);
         Post post = this.postService.getPost(id);
         model.addAttribute("post", post);
         return "domain/post/post_detail";
     }
 
-    // 글 생성
+    // 글 생성 (get)
     @GetMapping(value = "/create")
     public String postCreate(PostForm postForm){
         return "/domain/post/post_form";
     }
 
+    // 글생성(post)
     @PreAuthorize("isAuthenticated()")
     @PostMapping( "/create")
     public String postCreate(
@@ -142,4 +146,9 @@ public class PostController {
         return "domain/post/post_mylist";
     }
 
+//    @PostMapping("/savePost")
+//    public String savePost(@ModelAttribute("post") Post post){
+//        postService.save(post);
+//        return "redirect:/post/list";
+//    }
 }

@@ -2,6 +2,8 @@ package com.ll.medium.domain.post;
 
 import com.ll.medium.DataNotFoundException;
 import com.ll.medium.domain.member.SiteMember;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +44,10 @@ public class PostService {
         post.setAuthor(member);
         this.postRepository.save(post);
     }
+//    //공개된 글
+//    public Page<Post> getPublishedPosts(Pageable pageable){
+//        return postRepository.findByIsPublishedTrue(pageable);
+//    }
 
     // post 전체 페이징
     public Page<Post> getList(int page){
@@ -71,4 +77,23 @@ public class PostService {
     public List<Post> getMylist(String membername){
 
         return postRepository.findByAuthorMembername(membername);}
+
+    //조회수
+    @Transactional
+    public void increaseViewCount(Integer postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + postId));
+
+        post.increaseViewCount();
+        postRepository.save(post);
+    }
+
+    @Transactional
+    public void increaseLikeCount(Integer postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + postId));
+
+        post.increaseLikeCount();
+        postRepository.save(post);
+    }
 }
