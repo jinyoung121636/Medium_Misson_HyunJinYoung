@@ -22,6 +22,8 @@ repositories {
 }
 
 dependencies {
+    // commonmark
+    implementation 'org.commonmark:commonmark:0.21.0'
     // LOMBOK
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

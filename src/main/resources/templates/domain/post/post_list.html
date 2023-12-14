@@ -3,30 +3,30 @@
     <div class="flex justify-content-center">
     <div class="flex justify-content-end" style="width: 680px">
         <!-- 검색기능 -->
-        <div class="join">
-            <div>
-                <div style="width: 200px;">
-                    <input class="input input-bordered join-item" placeholder="Search"/>
-                </div>
-            </div>
-            <select class="select select-bordered join-item custom-select" style="width: 100px">
-                <option disabled selected>Filter</option>
-                <option >제목</option>
-                <option >내용</option>
-                <option >제목+내용</option>
-                <option >제목+내용+작성자</option>
-            </select>
-            <select class="select select-bordered join-item" style="width: 100px;">
-                <option disabled selected>Filter</option>
-                <option>최신순</option>
-                <option>오래된순</option>
-                <option>조회수 높은순</option>
-                <option>조회수 낮은순</option>
-            </select>
-            <div class="indicator">
-                <button class="btn join-item" style="height: 30px">찾기</button>
-            </div>
-        </div>
+<!--        <div class="join">-->
+<!--            <div>-->
+<!--                <div style="width: 200px;">-->
+<!--                    <input class="input input-bordered join-item" placeholder="Search"/>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <select class="select select-bordered join-item custom-select" style="width: 100px">-->
+<!--                <option disabled selected>Filter</option>-->
+<!--                <option >제목</option>-->
+<!--                <option >내용</option>-->
+<!--                <option >제목+내용</option>-->
+<!--                <option >제목+내용+작성자</option>-->
+<!--            </select>-->
+<!--            <select class="select select-bordered join-item" style="width: 100px;">-->
+<!--                <option disabled selected>Filter</option>-->
+<!--                <option>최신순</option>-->
+<!--                <option>오래된순</option>-->
+<!--                <option>조회수 높은순</option>-->
+<!--                <option>조회수 낮은순</option>-->
+<!--            </select>-->
+<!--            <div class="indicator">-->
+<!--                <button class="btn join-item" style="height: 30px">찾기</button>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     </div>
     <div class="flex flex-column align-items-center">
@@ -37,7 +37,7 @@
                         <h1 class="text-2xl"><p th:text="${post.subject}"></p></h1>
                         <h1 class="badge badge-outline text-sm mb-3 "><p th:if="${post.author != null }" th:text="${post.author.membername}"></p></h1>
                         <p class="text-gray-400">
-                            <span th:text="${#strings.abbreviate(post.content, 250)}"></span>
+                            <span th:utext="${@commonUtil.markdown(#strings.abbreviate(post.content, 250))}"></span>
                         </p>
                         <footer class="flex justify-content-between border-top mt-3">
                         <div>
@@ -86,5 +86,25 @@
         </ul>
     </div>
     <!-- 페이징처리 끝 -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#searchButton").click(function() {
+                // 검색어, 필터, 정렬 기준 가져오기
+                var searchKeyword = $("#searchInput").val();
+                var filterOption = $("#filterSelect").val();
+                var sortOption = $("#sortSelect").val();
+
+                // TODO: 검색 및 정렬에 필요한 로직 추가
+                console.log("Search Keyword: " + searchKeyword);
+                console.log("Filter Option: " + filterOption);
+                console.log("Sort Option: " + sortOption);
+
+                // TODO: 실제로 서버에 요청하여 결과를 가져오는 등의 동작 수행
+            });
+        });
+    </script>
+
 </div>
 </html>

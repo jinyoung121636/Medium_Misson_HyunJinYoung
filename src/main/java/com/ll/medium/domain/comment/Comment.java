@@ -32,4 +32,6 @@ public class Comment {
 
     @ManyToMany
     Set<SiteMember> voter;
+
+
 }

@@ -6,6 +6,7 @@ import com.ll.medium.domain.post.Post;
 import com.ll.medium.domain.post.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,28 @@ public class CommentController {
         }
         commentForm.setContent(comment.getContent());
         return "domain/comment/comment_form";
+    }
+
+    //comment 수정(post)
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/modify/{id}")
+    public String commentModify(
+            @Valid CommentForm commentForm,
+            BindingResult bindingResult,
+            @PathVariable("id") Integer id,
+            Principal principal
+            )
+    {
+        if(bindingResult.hasErrors()){
+            return "domain/comment/comment_form";
+        }
+        Comment comment = this.commentService.getComment(id);
+        if(!comment.getAuthor().getMembername().equals(principal.getName())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
+        }
+        this.commentService.modify(comment, commentForm.getContent());
+
+        return String.format("redirect:/post/detail/%s", comment.getPost().getId());
     }
 
     @PreAuthorize("isAuthenticated()")

@@ -2,6 +2,7 @@ package com.ll.medium.domain.post;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.parameters.P;
 
@@ -9,10 +10,12 @@ import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post findBySubject(String subject);
-    Post findBySubjectAndContent(String subject, String content);
+    Post findByContent(String content);
+    Post findBySubjectOrContent(String subject, String content);
     List<Post> findBySubjectLike(String subject);
     Page<Post> findAll(Pageable pageable);
     List<Post> findByAuthorMembername(String membername);
+    Page<Post> findAll(Specification<Post> spec, Pageable pageable);
 
 //    Page<Post> findByIsPublishedTrue(Pageable pageable);
     //메서드 이름 규칙 중 하나

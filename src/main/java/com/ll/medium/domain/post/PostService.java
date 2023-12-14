@@ -1,14 +1,17 @@
 package com.ll.medium.domain.post;
 
 import com.ll.medium.DataNotFoundException;
+import com.ll.medium.domain.comment.Comment;
 import com.ll.medium.domain.member.SiteMember;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,6 +23,7 @@ import java.util.Optional;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+
     //post 리스트
     public List<Post> getList(){
         return this.postRepository.findAll();
@@ -44,10 +48,6 @@ public class PostService {
         post.setAuthor(member);
         this.postRepository.save(post);
     }
-//    //공개된 글
-//    public Page<Post> getPublishedPosts(Pageable pageable){
-//        return postRepository.findByIsPublishedTrue(pageable);
-//    }
 
     // post 전체 페이징
     public Page<Post> getList(int page){
@@ -95,4 +95,5 @@ public class PostService {
         post.getVoter().remove(siteMember);
         this.postRepository.save(post);
     }
+
 }
