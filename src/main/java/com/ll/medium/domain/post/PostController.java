@@ -128,10 +128,13 @@ public class PostController {
     // mylist
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/mylist")
-    public String getmylist(Model model, Principal principal) {
+    public String getmylist(Model model,
+                            Principal principal,
+                            @RequestParam(value = "page", defaultValue = "0") int page) {
+
         // 현재 인증된 사용자의 이름 가져옴
         String membername = principal.getName();
-        List<Post> mylist = this.postService.getMylist(membername);
+        Page<Post> mylist = this.postService.getMyList(membername,page);
         model.addAttribute("mylist", mylist);
 
         return "domain/post/post_mylist";

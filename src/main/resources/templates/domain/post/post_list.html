@@ -1,7 +1,21 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-5">
-    <div class="flex justify-content-center">
-    <div class="flex justify-content-end" style="width: 680px">
+    <div class="d-flex justify-content-center">
+    <div class="justify-content-start" style="width: 700px">
+        <button class="click mr-2">
+            <a th:href="@{/post/list}">
+            전체 글
+            </a>
+        </button>
+        <button class="click">
+            <a th:href="@{/post/mylist}">
+            내가 쓴 글
+            </a>
+        </button>
+    </div>
+    </div>
+<!--    <div class="flex justify-content-center">-->
+<!--    <div class="flex justify-content-end" style="width: 680px">-->
         <!-- 검색기능 -->
 <!--        <div class="join">-->
 <!--            <div>-->
@@ -27,8 +41,8 @@
 <!--                <button class="btn join-item" style="height: 30px">찾기</button>-->
 <!--            </div>-->
 <!--        </div>-->
-    </div>
-    </div>
+<!--    </div>-->
+<!--    </div>-->
     <div class="flex flex-column align-items-center">
         <div class="mycards" th:each="post, loop : ${paging}">
             <a th:href="@{|/post/detail/${post.id}|}">
@@ -86,25 +100,6 @@
         </ul>
     </div>
     <!-- 페이징처리 끝 -->
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#searchButton").click(function() {
-                // 검색어, 필터, 정렬 기준 가져오기
-                var searchKeyword = $("#searchInput").val();
-                var filterOption = $("#filterSelect").val();
-                var sortOption = $("#sortSelect").val();
-
-                // TODO: 검색 및 정렬에 필요한 로직 추가
-                console.log("Search Keyword: " + searchKeyword);
-                console.log("Filter Option: " + filterOption);
-                console.log("Sort Option: " + sortOption);
-
-                // TODO: 실제로 서버에 요청하여 결과를 가져오는 등의 동작 수행
-            });
-        });
-    </script>
 
 </div>
 </html>

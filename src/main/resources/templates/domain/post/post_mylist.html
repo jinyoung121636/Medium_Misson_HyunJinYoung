@@ -1,5 +1,48 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-5">
+<!--  <div class="flex justify-content-center">-->
+<!--    <div class="flex justify-content-between align-items-end" style="width: 680px">-->
+      <!-- 검색기능 -->
+<!--      <div class="join">-->
+<!--        <div>-->
+<!--          <div style="width: 200px;">-->
+<!--            <input class="input input-bordered join-item" placeholder="Search"/>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <select class="select select-bordered join-item custom-select" style="width: 100px">-->
+<!--          <option disabled selected>Filter</option>-->
+<!--          <option >제목</option>-->
+<!--          <option >내용</option>-->
+<!--          <option >제목+내용</option>-->
+<!--          <option >제목+내용+작성자</option>-->
+<!--        </select>-->
+<!--        <select class="select select-bordered join-item" style="width: 100px;">-->
+<!--          <option disabled selected>Filter</option>-->
+<!--          <option>최신순</option>-->
+<!--          <option>오래된순</option>-->
+<!--          <option>조회수 높은순</option>-->
+<!--          <option>조회수 낮은순</option>-->
+<!--        </select>-->
+<!--        <div class="indicator">-->
+<!--          <button class="btn join-item" style="height: 30px">찾기</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+  <div class="d-flex justify-content-center">
+    <div class="justify-content-start" style="width: 700px">
+      <button class="click mr-2">
+        <a th:href="@{/post/list}">
+          전체 글
+        </a>
+      </button>
+      <button class="click">
+        <a th:href="@{/post/mylist}">
+          내가 쓴 글
+        </a>
+      </button>
+    </div>
+  </div>
   <div class="flex flex-column align-items-center">
     <div class="mycards" th:each="post, loop : ${mylist}">
       <a th:href="@{|/post/detail/${post.id}|}">
@@ -8,20 +51,22 @@
             <h1 class="text-2xl"><p th:text="${post.subject}"></p></h1>
             <h1 class="badge badge-outline text-sm mb-3 "><p th:if="${post.author != null }" th:text="${post.author.membername}"></p></h1>
             <p class="text-gray-400">
-              <span th:text="${#strings.abbreviate(post.content, 250)}"></span>
+              <span th:utext="${@commonUtil.markdown(#strings.abbreviate(post.content, 250))}"></span>
             </p>
             <footer class="flex justify-content-between border-top mt-3">
               <div>
                 <!--좋아요 수-->
                 <i class="fa-solid fa-heart text-red-500"></i>
-                <span class="text-sm text-black-500" th:if="${#lists.size(post.commentList)>0}"
-                      th:text="${#lists.size(post.commentList)}"></span>
+                <span class="text-sm text-black-500" th:if="${#lists.size(post.voter)>0}"
+                      th:text="${#lists.size(post.voter)}"></span>
                 <!--댓글 수-->
                 <i class="fa-regular fa-comment ms-1"></i>
                 <span class="text-sm text-black-500" th:if="${#lists.size(post.commentList)>0}"
                       th:text="${#lists.size(post.commentList)}"></span>
                 <!--조회수-->
                 <i class="fa-solid fa-eye ms-1" style="color: dimgray"></i>
+                <span class="text-sm text-black-500" th:if="${post.viewCount > 0}"
+                      th:text="${post.viewCount}"></span>
               </div>
               <div>
                 <div class="justify-content-between" th:text="${#temporals.format(post.createDate, 'yyyy-MM-dd HH:mm')}"></div>
@@ -32,5 +77,29 @@
       </a>
     </div>
   </div>
+    <!--post 페이징 시작-->
+  <div class="mt-4" th:if="${!mylist.isEmpty()}">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${!mylist.hasPrevious} ? 'disabled'">
+        <a class="page-link"
+           th:href="@{|?page=${mylist.number-1}|}">
+          <span><</span>
+        </a>
+      </li>
+      <li th:each="page: ${#numbers.sequence(0, mylist.totalPages-1)}"
+          th:if="${page >= mylist.number-5 and page <= mylist.number+5}"
+          th:classappend="${page == mylist.number} ? 'active'"
+          class="page-item">
+        <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+      </li>
+      <li class="page-item" th:classappend="${!mylist.hasNext} ? 'disabled'">
+        <a class="page-link" th:href="@{|?page=${mylist.number+1}|}">
+          <span>></span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <!-- 페이징처리 끝 -->
+
 </div>
 </html>
