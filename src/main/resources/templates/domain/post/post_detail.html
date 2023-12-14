@@ -8,14 +8,30 @@
         <span class="fs-4 mr-3 text-gray-400" th:if="${post.author != null}" th:text="${post.author.membername}"></span>
         <span class="text-gray-300" th:text="${#temporals.format(post.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
         </div>
-        <div id="counter-container" style="height: 60px" class="bg-transparent">
-            <a href="javascript:void(0);" class="recommend" th:data-uri="@{|/post/${post.id}/like|}">
-            <button class="bg-transparent" id="toggle-button">
-                <span><i id="heart-icon" class="fa-solid fa-heart mr-1"></i></span>
-                <span id="counter" class="fs-5" th:text="${#lists.size(post.voter)}"></span>
-            </button>
-            </a>
+
+        <div id="counter-container" class="bg-transparent mr-2">
+            <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+                <a th:href="@{|/post/${post.id}/like|}">
+                <!-- 사용자가 로그인한 경우 -->
+                <button class="bg-transparent" id="toggle-button">
+                    <span><i id="heart-icon" class="fa-solid fa-heart mr-1" style="color: red"></i></span>
+                    <span id="counter" class="fs-5" th:text="${#lists.size(post.voter)}"></span>
+                </button>
+                </a>
+            </th:block>
+            <th:block th:unless="${#authorization.expression('isAuthenticated()')}">
+                <!-- 사용자가 로그인하지 않은 경우 -->
+                <a th:href="@{/member/login}">
+                    <button class="bg-transparent" id="toggle-button">
+                        <span><i id="heart-icon" class="fa-solid fa-heart mr-1" style="color: gray"></i></span>
+                        <span id="counter" class="fs-5" th:text="${#lists.size(post.voter)}" style="color: gray"></span>
+                    </button>
+                </a>
+            </th:block>
         </div>
+
+
+
     </div>
     <div class="flex justify-content-end">
         <div class="click mr-2 text-gray-400 hover:text-black">
@@ -47,12 +63,29 @@
             <span class=" fs-4 mr-3 text-gray-400" th:if="${comment.author != null}" th:text="${comment.author.membername}"></span>
             <span class="text-gray-300" th:text="${#temporals.format(post.createDate, 'yyyy년 MM월 dd일 HH:mm')}"></span>
         </div>
-        <div id="counter-container" class="flex align-items-center bg-transparent">
-            <button id="toggle-button" class="bg-transparent">
-                <span><i id="heart-icon" class="fa-solid fa-heart mr-1"></i></span>
-                <span id="counter" class="fs-5">0</span>
-            </button>
+
+        <div id="counter-container" class="flex align-items-center bg-transparent mr-2">
+        <th:block th:if="${#authorization.expression('isAuthenticated()')}">
+            <a th:href="@{|/comment/${comment.id}/like|}">
+                <!-- 사용자가 로그인한 경우 -->
+                <button class="bg-transparent" id="toggle-button">
+                    <span><i id="heart-icon" class="fa-solid fa-heart mr-1" style="color: red"></i></span>
+                    <span id="counter" class="fs-5" th:text="${#lists.size(comment.voter)}"></span>
+                </button>
+            </a>
+        </th:block>
+        <th:block th:unless="${#authorization.expression('isAuthenticated()')}">
+            <!-- 사용자가 로그인하지 않은 경우 -->
+            <a th:href="@{/member/login}">
+                <button class="bg-transparent" id="toggle-button">
+                    <span><i id="heart-icon" class="fa-solid fa-heart mr-1" style="color: gray"></i></span>
+                    <span id="counter" class="fs-5" th:text="${#lists.size(comment.voter)}" style="color: gray"></span>
+                </button>
+            </a>
+        </th:block>
         </div>
+
+
     </div>
     <div class="flex justify-content-end">
         <div class="click mr-2 text-gray-400 hover:text-black">
@@ -86,6 +119,7 @@
         </div>
     </form>
 </div>
-
 </div>
+
+
 </html>

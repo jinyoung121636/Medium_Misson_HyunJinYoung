@@ -23,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/post")
@@ -37,23 +38,16 @@ public class PostController {
     public String list(
             Model model,
             @RequestParam(value = "page", defaultValue = "0")
-            int page){
+            int page) {
         Page<Post> paging = this.postService.getList(page);
-        model.addAttribute("paging",paging);
+        model.addAttribute("paging", paging);
         return "domain/post/post_list";
     }
 
-    // 최신글 보기
-    @GetMapping("/new")
-    public String getNewPost(Model model){
-        List<Post> newlist = this.postService.getNewList();
-        model.addAttribute("newlist",newlist);
-        return "domain/post/post_new";
-    }
 
     // 글 상세보기
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id")Integer id, CommentForm commentForm){
+    public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
         postService.increaseViewCount(id);
         Post post = this.postService.getPost(id);
         model.addAttribute("post", post);
@@ -62,19 +56,18 @@ public class PostController {
 
     // 글 생성 (get)
     @GetMapping(value = "/create")
-    public String postCreate(PostForm postForm){
+    public String postCreate(PostForm postForm) {
         return "/domain/post/post_form";
     }
 
     // 글생성(post)
     @PreAuthorize("isAuthenticated()")
-    @PostMapping( "/create")
+    @PostMapping("/create")
     public String postCreate(
             @Valid PostForm postForm,
             BindingResult bindingResult,
-            Principal principal)
-    {
-        if(bindingResult.hasErrors()){
+            Principal principal) {
+        if (bindingResult.hasErrors()) {
             return "domain/post/post_form";
         }
         SiteMember siteMember = this.memberService.getMember(principal.getName());
@@ -88,10 +81,10 @@ public class PostController {
     public String postModify(
             PostForm postForm,
             @PathVariable("id") Integer id,
-            Principal principal){
+            Principal principal) {
         Post post = this.postService.getPost(id);
 
-        if(!post.getAuthor().getMembername().equals(principal.getName())){
+        if (!post.getAuthor().getMembername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         postForm.setSubject(post.getSubject());
@@ -106,14 +99,13 @@ public class PostController {
             @Valid PostForm postForm,
             BindingResult bindingResult,
             Principal principal,
-            @PathVariable("id") Integer id)
-    {
-        if(bindingResult.hasErrors()){
+            @PathVariable("id") Integer id) {
+        if (bindingResult.hasErrors()) {
             return "domain/post/post_form";
         }
         Post post = this.postService.getPost(id);
-        if(!post.getAuthor().getMembername().equals(principal.getName())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없습니다.");
+        if (!post.getAuthor().getMembername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         this.postService.modify(post, postForm.getSubject(), postForm.getContent());
         return String.format("redirect:/post/detail/%s", id);
@@ -124,10 +116,9 @@ public class PostController {
     @GetMapping("/delete/{id}")
     public String postDelete(
             Principal principal,
-            @PathVariable("id") Integer id)
-    {
+            @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
-        if(!post.getAuthor().getMembername().equals(principal.getName())){
+        if (!post.getAuthor().getMembername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.postService.delete(post);
@@ -137,29 +128,27 @@ public class PostController {
     // mylist
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/mylist")
-    public String getmylist(Model model, Principal principal){
-            // 현재 인증된 사용자의 이름 가져옴
-            String membername = principal.getName();
-            List<Post> mylist = this.postService.getMylist(membername);
-            model.addAttribute("mylist", mylist);
+    public String getmylist(Model model, Principal principal) {
+        // 현재 인증된 사용자의 이름 가져옴
+        String membername = principal.getName();
+        List<Post> mylist = this.postService.getMylist(membername);
+        model.addAttribute("mylist", mylist);
 
         return "domain/post/post_mylist";
     }
 
-    @GetMapping(value = "detail/{id}/like")
-    public String postLike(Model model, @PathVariable("id")Integer id, PostForm postForm){
-        postService.increaseLikeCount(id);
-        Post post = this.postService.getPost(id);
-        model.addAttribute("post", post);
-        return "redirect:/post/detail/{id}";
-    }
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}/like")
-    public String postVote(Principal principal, @PathVariable("id") Integer id){
+    public String postVote(Principal principal, @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
         SiteMember siteMember = this.memberService.getMember(principal.getName());
-        this.postService.vote(post, siteMember);
+
+        //좋아요 / 좋아요 취소
+        if (post.getVoter().contains(siteMember)) {
+            this.postService.voteCancle(post, siteMember);
+        } else {
+            this.postService.vote(post, siteMember);
+        }
         return String.format("redirect:/post/detail/%s", id);
     }
 

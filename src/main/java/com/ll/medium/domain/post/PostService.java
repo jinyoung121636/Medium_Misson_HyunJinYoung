@@ -54,12 +54,10 @@ public class PostService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
 
-        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 30, Sort.by(sorts));
         return this.postRepository.findAll(pageable);
     }
 
-//     post 최신글 30개 가져오기
-    public List<Post> getNewList(){return postRepository.findTop30ByOrderByCreateDateDesc();}
 
     // post 수정
     public void modify(Post post, String subject, String content){
@@ -88,18 +86,13 @@ public class PostService {
         postRepository.save(post);
     }
 
-    //좋아요
-    @Transactional
-    public void increaseLikeCount(Integer postId) {
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + postId));
-
-        post.increaseLikeCount();
-        postRepository.save(post);
-    }
-
     public void vote(Post post, SiteMember siteMember){
         post.getVoter().add(siteMember);
+        this.postRepository.save(post);
+    }
+
+    public void voteCancle(Post post, SiteMember siteMember){
+        post.getVoter().remove(siteMember);
         this.postRepository.save(post);
     }
 }

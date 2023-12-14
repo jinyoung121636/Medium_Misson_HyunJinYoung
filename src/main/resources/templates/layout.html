@@ -28,43 +28,28 @@
 <script th:src="@{/bootstrap.min.js}"></script>
 <!-- 자바스크립트 Start -->
 <th:block layout:fragment="script"></th:block>
-<!--<script>-->
-<!--    const toggleButton = document.getElementById('toggle-button');-->
-<!--    const counterElement = document.getElementById('counter');-->
-
-<!--    let count = 0;-->
-
-<!--    toggleButton.addEventListener('click', function () {-->
-<!--        count = 1-count; // 0과 1을 토글-->
-<!--        counterElement.innerText = count;-->
-
-<!--        // 'clicked' 클래스를 토글하여 스타일 변경-->
-<!--        toggleButton.classList.toggle('clicked');-->
-
-<!--        // 숫자와 하트 아이콘의 색상을 변경-->
-<!--        counterElement.style.color = count ? '#000' : '#6c757d';-->
-<!--        document.getElementById('heart-icon').style.color = count ? '#d9534f' : '#6c757d';-->
-<!--    });-->
-<!--</script>-->
 
 <script layout:fragment="script" type='text/javascript'>
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            if(confirm("정말로 삭제하시겠습니까?")) {
-                location.href = this.dataset.uri;
-            };
+        element.addEventListener('click', function () {
+            Swal.fire({
+                title: "확인",
+                text: "삭제 하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "삭제",
+                cancelButtonText: "취소"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = this.dataset.uri;
+                }
+            });
         });
     });
 
-    const recommend_elements = document.getElementsByClassName("recommend");
-    Array.from(recommend_elements).forEach(function(element) {
-        element.addEventListener('click', function() {
-            if(confirm("정말로 추천하시겠습니까?")) {
-                location.href = this.dataset.uri;
-            };
-        });
-    });
 </script>
 <!-- 자바스크립트 End -->
 </body>

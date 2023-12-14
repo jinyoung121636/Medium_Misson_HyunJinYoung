@@ -46,4 +46,8 @@ public class CommentService {
         this.commentRepository.delete(comment);
     }
 
+    public void vote(Comment comment, SiteMember siteMember){
+        comment.getVoter().add(siteMember);
+        this.commentRepository.save(comment);
+    }
 }

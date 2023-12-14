@@ -44,13 +44,6 @@ public class Post {
         this.viewCount = (this.viewCount == null) ? 1 : this.viewCount+1;
     }
 
-    @Column(name = "like_count")
-    private Integer likecount = 0;
-
-    public void increaseLikeCount(){
-        this.likecount = (this.likecount == null) ? 0 : this.likecount+1;
-    }
-
     @ManyToMany
     Set<SiteMember> voter;
 

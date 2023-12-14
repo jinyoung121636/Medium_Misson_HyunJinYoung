@@ -77,5 +77,15 @@ public class CommentController {
         return String.format("redirect:/post/detail/%s", comment.getPost().getId());
     }
 
+    // comment 추천
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/{id}/like")
+    public String commentVote(Principal principal,@PathVariable("id") Integer id){
+        Comment comment = this.commentService.getComment(id);
+        SiteMember siteMember = this.memberService.getMember(principal.getName());
+        this.commentService.vote(comment, siteMember);
+        return String.format("redirect:/post/detail/%s", comment.getPost().getId());
+    }
+
 
 }
