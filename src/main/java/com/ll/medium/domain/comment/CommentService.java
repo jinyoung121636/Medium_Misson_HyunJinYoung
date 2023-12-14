@@ -50,4 +50,9 @@ public class CommentService {
         comment.getVoter().add(siteMember);
         this.commentRepository.save(comment);
     }
+
+    public void voteCancle(Comment comment, SiteMember siteMember){
+        comment.getVoter().remove(siteMember);
+        this.commentRepository.save(comment);
+    }
 }

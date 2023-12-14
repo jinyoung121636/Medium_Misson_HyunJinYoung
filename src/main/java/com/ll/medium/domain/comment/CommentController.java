@@ -77,14 +77,20 @@ public class CommentController {
         return String.format("redirect:/post/detail/%s", comment.getPost().getId());
     }
 
-    // comment 추천
+    // comment  좋아요/취소
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}/like")
-    public String commentVote(Principal principal,@PathVariable("id") Integer id){
+    public String commentVote(Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
         SiteMember siteMember = this.memberService.getMember(principal.getName());
-        this.commentService.vote(comment, siteMember);
-        return String.format("redirect:/post/detail/%s", comment.getPost().getId());
+
+        if (comment.getVoter().contains(siteMember)) {
+            this.commentService.voteCancle(comment, siteMember);
+        } else {
+            this.commentService.vote(comment, siteMember);
+        }
+        return String.format("redirect:/post/detail/%s",comment.getPost().getId());
     }
 
 
