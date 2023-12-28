@@ -45,7 +45,6 @@
     </script>
 <!--    회원가입 폼-->
     <form style="width: 400px" class="m-auto p-5" th:action="@{/member/join}" th:object="${memberCreateForm}" method="post" onsubmit="submitJoinForm(this); return false;" >
-<!--        <div th:replace="~{form_errors :: formErrorsFragment}"></div>-->
         <div class="mb-3">
             <label name="username" class="form-label">사용자ID</label>
             <input type="text" th:field="*{username}" class="form-control">

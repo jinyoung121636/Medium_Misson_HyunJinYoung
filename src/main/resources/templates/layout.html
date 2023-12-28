@@ -31,7 +31,11 @@
 <!-- 자바스크립트 Start -->
 <th:block layout:fragment="script"></th:block>
 <script>
-
+    function toastWarning(message) {
+        toastr.warning(message);
+    }
+</script>
+<script>
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function(element) {
         element.addEventListener('click', function () {

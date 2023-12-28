@@ -1,7 +1,12 @@
 package com.ll.medium.domain.member;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,13 +29,6 @@ public class MemberController {
     @PostMapping("/join")
     public String signup(@Valid MemberCreateForm memberCreateForm, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "domain/member/join_form";
-        }
-        if(!memberCreateForm.getPassword().equals(memberCreateForm.getPasswordConfirm())){
-            bindingResult.rejectValue(
-                    "passwordConfirm",
-                    "passwordInCorrect",
-                    "2개의 패스워드가 일치하지 않습니다.");
             return "domain/member/join_form";
         }
         memberService.create(
