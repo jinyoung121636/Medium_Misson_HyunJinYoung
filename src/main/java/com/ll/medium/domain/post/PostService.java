@@ -69,12 +69,12 @@ public class PostService {
     }
 
     // mylist
-    public Page<Post> getMyList(String membername, int page){
+    public Page<Post> getMyList(String username, int page){
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
-        return this.postRepository.findByAuthorMembername(membername, pageable);
+        return this.postRepository.findByAuthorUsername(username, pageable);
     }
 
     // newlist

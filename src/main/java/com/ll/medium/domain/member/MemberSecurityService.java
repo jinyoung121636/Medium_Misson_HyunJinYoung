@@ -24,7 +24,7 @@ public class MemberSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        Optional<Member>_siteMember = this.memberRepository.findBymembername(username);
+        Optional<Member>_siteMember = this.memberRepository.findByusername(username);
         if(_siteMember.isEmpty()){
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
@@ -35,6 +35,6 @@ public class MemberSecurityService implements UserDetailsService {
         }else {
             authorities.add(new SimpleGrantedAuthority((MemberRole.USER.getValue())));
         }
-        return new User(member.getMembername(), member.getPassword(), authorities);
+        return new User(member.getUsername(), member.getPassword(), authorities);
     }
 }

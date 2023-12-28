@@ -27,15 +27,10 @@ public class MemberController {
 
     // 회원가입 정보를 저장
     @PostMapping("/join")
-    public String signup(@Valid MemberCreateForm memberCreateForm, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return "domain/member/join_form";
-        }
-        memberService.create(
-                memberCreateForm.getUsername(),
-                memberCreateForm.getEmail(),
-                memberCreateForm.getPassword());
-        return "redirect:/";
+    public String signup(@Valid MemberCreateForm memberCreateForm){
+        Member member = memberService.create(memberCreateForm.getUsername(), memberCreateForm.getEmail(), memberCreateForm.getPassword());
+        long id = member.getId();
+        return "redirect:/?msg=No %d member joined.".formatted(id);
     }
 
     // 로그인 템플릿을 불러줌

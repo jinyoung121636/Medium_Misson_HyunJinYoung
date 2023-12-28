@@ -14,22 +14,22 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     public Member create(
-            String membername,
+            String username,
             String emaill,
             String password)
     {
         Member member = new Member();
-        member.setMembername(membername);
+        member.setUsername(username);
         member.setEmail(emaill);
         member.setPassword(passwordEncoder.encode(password));
         this.memberRepository.save(member);
         return member;
     }
 
-    public Member getMember (String membername) {
-        Optional<Member> siteMember  = this.memberRepository.findBymembername(membername);
-        if(siteMember.isPresent()){
-            return siteMember.get();
+    public Member getUser (String username) {
+        Optional<Member> member  = this.memberRepository.findByusername(username);
+        if(member.isPresent()){
+            return member.get();
         } else {
             throw new DataNotFoundException("member not found");
         }

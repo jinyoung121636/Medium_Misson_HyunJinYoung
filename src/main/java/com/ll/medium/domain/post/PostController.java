@@ -65,7 +65,7 @@ public class PostController {
         if (bindingResult.hasErrors()) {
             return "domain/post/post_form";
         }
-        Member member = this.memberService.getMember(principal.getName());
+        Member member = this.memberService.getUser(principal.getName());
         this.postService.create(postForm.getSubject(), postForm.getContent(), member);
         return "redirect:/post/list";
     }
@@ -79,7 +79,7 @@ public class PostController {
             Principal principal) {
         Post post = this.postService.getPost(id);
 
-        if (!post.getAuthor().getMembername().equals(principal.getName())) {
+        if (!post.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         postForm.setSubject(post.getSubject());
@@ -99,7 +99,7 @@ public class PostController {
             return "domain/post/post_form";
         }
         Post post = this.postService.getPost(id);
-        if (!post.getAuthor().getMembername().equals(principal.getName())) {
+        if (!post.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         this.postService.modify(post, postForm.getSubject(), postForm.getContent());
@@ -113,7 +113,7 @@ public class PostController {
             Principal principal,
             @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
-        if (!post.getAuthor().getMembername().equals(principal.getName())) {
+        if (!post.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.postService.delete(post);
@@ -148,7 +148,7 @@ public class PostController {
     @GetMapping("/{id}/like")
     public String postVote(Principal principal, @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
-        Member member = this.memberService.getMember(principal.getName());
+        Member member = this.memberService.getUser(principal.getName());
 
         //좋아요 / 좋아요 취소
         if (post.getVoter().contains(member)) {

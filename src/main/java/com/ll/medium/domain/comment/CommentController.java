@@ -38,7 +38,7 @@ public class CommentController {
             Principal principal)
     {
         Post post = this.postService.getPost(id);
-        Member member = this.memberService.getMember(principal.getName());
+        Member member = this.memberService.getUser(principal.getName());
         if(bindingResult.hasErrors()){
             model.addAttribute("post", post);
             return "domain/post/post_detail";
@@ -56,7 +56,7 @@ public class CommentController {
             Principal principal)
     {
         Comment comment = this.commentService.getComment(id);
-        if(!comment.getAuthor().getMembername().equals(principal.getName())){
+        if(!comment.getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다");
         }
         commentForm.setContent(comment.getContent());
@@ -77,7 +77,7 @@ public class CommentController {
             return "domain/comment/comment_form";
         }
         Comment comment = this.commentService.getComment(id);
-        if(!comment.getAuthor().getMembername().equals(principal.getName())){
+        if(!comment.getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         this.commentService.modify(comment, commentForm.getContent());
@@ -92,7 +92,7 @@ public class CommentController {
             @PathVariable("id") Integer id)
     {
         Comment comment = this.commentService.getComment(id);
-        if(!comment.getAuthor().getMembername().equals(principal.getName())){
+        if(!comment.getAuthor().getUsername().equals(principal.getName())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.commentService.delete(comment);
@@ -105,7 +105,7 @@ public class CommentController {
     @GetMapping("/{id}/like")
     public String commentVote(Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
-        Member member = this.memberService.getMember(principal.getName());
+        Member member = this.memberService.getUser(principal.getName());
 
         if (comment.getVoter().contains(member)) {
             this.commentService.voteCancle(comment, member);

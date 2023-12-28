@@ -18,18 +18,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        const urlParams = getUrlParams(location.href)
+    </script>
 </head>
 
 <body>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.14/dist/full.min.css" rel="stylesheet" type="text/css" />
-<!--네비게이션바-->
-<nav th:replace="~{navbar :: navbarFragment}"></nav>
-<!-- 기본 템플릿 안에 삽입될 내용 Start -->
-<th:block layout:fragment="content"></th:block>
-<!-- Bootstrap JS -->
-<script th:src="@{/bootstrap.min.js}"></script>
-<!-- 자바스크립트 Start -->
-<th:block layout:fragment="script"></th:block>
+
+<nav th:replace="~{navbar :: navbarFragment}"></nav> <!--네비게이션바-->
+<th:block layout:fragment="content"></th:block>   <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<script th:src="@{/bootstrap.min.js}"></script>  <!-- Bootstrap JS -->
+<th:block layout:fragment="script"></th:block> <!-- 자바스크립트 Start -->
+<script>
+    if (urlParams.msg) {
+        toastNotice(urlParams.msg);
+    }
+</script>
 <script>
     function toastWarning(message) {
         toastr.warning(message);
