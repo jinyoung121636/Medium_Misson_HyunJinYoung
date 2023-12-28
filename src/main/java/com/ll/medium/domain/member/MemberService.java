@@ -13,12 +13,12 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public SiteMember create(
+    public Member create(
             String membername,
             String emaill,
             String password)
     {
-        SiteMember member = new SiteMember();
+        Member member = new Member();
         member.setMembername(membername);
         member.setEmail(emaill);
         member.setPassword(passwordEncoder.encode(password));
@@ -26,8 +26,8 @@ public class MemberService {
         return member;
     }
 
-    public SiteMember getMember (String membername) {
-        Optional<SiteMember> siteMember  = this.memberRepository.findBymembername(membername);
+    public Member getMember (String membername) {
+        Optional<Member> siteMember  = this.memberRepository.findBymembername(membername);
         if(siteMember.isPresent()){
             return siteMember.get();
         } else {

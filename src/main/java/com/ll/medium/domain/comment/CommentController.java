@@ -1,12 +1,11 @@
 package com.ll.medium.domain.comment;
 
 import com.ll.medium.domain.member.MemberService;
-import com.ll.medium.domain.member.SiteMember;
+import com.ll.medium.domain.member.Member;
 import com.ll.medium.domain.post.Post;
 import com.ll.medium.domain.post.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -39,12 +38,12 @@ public class CommentController {
             Principal principal)
     {
         Post post = this.postService.getPost(id);
-        SiteMember siteMember = this.memberService.getMember(principal.getName());
+        Member member = this.memberService.getMember(principal.getName());
         if(bindingResult.hasErrors()){
             model.addAttribute("post", post);
             return "domain/post/post_detail";
         }
-        Comment comment = this.commentService.create(post, commentForm.getContent(), siteMember);
+        Comment comment = this.commentService.create(post, commentForm.getContent(), member);
         return String.format("redirect:/post/detail/%s", id);
     }
 
@@ -106,12 +105,12 @@ public class CommentController {
     @GetMapping("/{id}/like")
     public String commentVote(Principal principal, @PathVariable("id") Integer id) {
         Comment comment = this.commentService.getComment(id);
-        SiteMember siteMember = this.memberService.getMember(principal.getName());
+        Member member = this.memberService.getMember(principal.getName());
 
-        if (comment.getVoter().contains(siteMember)) {
-            this.commentService.voteCancle(comment, siteMember);
+        if (comment.getVoter().contains(member)) {
+            this.commentService.voteCancle(comment, member);
         } else {
-            this.commentService.vote(comment, siteMember);
+            this.commentService.vote(comment, member);
         }
         return String.format("redirect:/post/detail/%s",comment.getPost().getId());
     }

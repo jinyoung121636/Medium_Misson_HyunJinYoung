@@ -1,7 +1,7 @@
 package com.ll.medium.domain.post;
 
 import com.ll.medium.domain.comment.Comment;
-import com.ll.medium.domain.member.SiteMember;
+import com.ll.medium.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +30,7 @@ public class Post {
     private List<Comment> commentList;
 
     @ManyToOne
-    private SiteMember author;
+    private Member author;
 
     //조회수
     @Column(name = "view_count")
@@ -45,7 +45,7 @@ public class Post {
     }
 
     @ManyToMany
-    Set<SiteMember> voter;
+    Set<Member> voter;
 
 //    @Column(name = "IS_PUBLISHED", nullable = true)
 //    private boolean isPublished;

@@ -8,48 +8,27 @@
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
     <!-- medium CSS -->
     <title>Hello, medium!</title>
-<!--    &lt;!&ndash; Toast UI Editor 스타일시트 포함 &ndash;&gt;-->
-<!--    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.css" />-->
-
-<!--    &lt;!&ndash; 필요한 의존 라이브러리 포함 &ndash;&gt;-->
-<!--    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
-
-<!--    &lt;!&ndash; Toast UI Editor 스크립트 포함 &ndash;&gt;-->
-<!--    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>-->
+    <!--테일윈즈-->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- 폰트적용-->
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
     <!--폰트어썸-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!--테일윈즈-->
-    <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
+
 <body>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.14/dist/full.min.css" rel="stylesheet" type="text/css" />
 <!--네비게이션바-->
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <th:block layout:fragment="content"></th:block>
-
 <!-- Bootstrap JS -->
 <script th:src="@{/bootstrap.min.js}"></script>
-
 <!-- 자바스크립트 Start -->
 <th:block layout:fragment="script"></th:block>
-
 <script>
-// <!--    document.addEventListener('DOMContentLoaded', function () {-->
-// <!--        const editor = new toastui.Editor({-->
-// <!--            el: document.querySelector('#content'),-->
-// <!--            height: '500px',-->
-// <!--            initialEditType: 'markdown',-->
-// <!--            previewStyle: 'vertical',-->
-// <!--        });-->
-// <!--    });-->
 
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function(element) {
@@ -74,4 +53,5 @@
 </script>
 <!-- 자바스크립트 End -->
 </body>
+
 </html>

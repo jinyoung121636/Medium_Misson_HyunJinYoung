@@ -1,17 +1,14 @@
 package com.ll.medium.domain.post;
 
 import com.ll.medium.DataNotFoundException;
-import com.ll.medium.domain.comment.Comment;
-import com.ll.medium.domain.member.SiteMember;
+import com.ll.medium.domain.member.Member;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -40,7 +37,7 @@ public class PostService {
     }
 
     // post 생성
-    public void create(String subject, String content, SiteMember member){
+    public void create(String subject, String content, Member member){
         Post post = new Post();
         post.setSubject(subject);
         post.setContent(content);
@@ -54,7 +51,7 @@ public class PostService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
 
-        Pageable pageable = PageRequest.of(page, 30, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.postRepository.findAll(pageable);
     }
 
@@ -76,8 +73,13 @@ public class PostService {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));
 
-        Pageable pageable = PageRequest.of(page, 30, Sort.by(sorts));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
         return this.postRepository.findByAuthorMembername(membername, pageable);
+    }
+
+    // newlist
+    public List<Post> getNewList(){
+        return this.postRepository.findTop30ByOrderByCreateDateDesc();
     }
 
     //조회수
@@ -90,13 +92,13 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public void vote(Post post, SiteMember siteMember){
-        post.getVoter().add(siteMember);
+    public void vote(Post post, Member member){
+        post.getVoter().add(member);
         this.postRepository.save(post);
     }
 
-    public void voteCancle(Post post, SiteMember siteMember){
-        post.getVoter().remove(siteMember);
+    public void voteCancle(Post post, Member member){
+        post.getVoter().remove(member);
         this.postRepository.save(post);
     }
 

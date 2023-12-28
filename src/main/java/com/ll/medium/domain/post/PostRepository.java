@@ -17,8 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     Page<Post> findAll(Pageable pageable);
     Page<Post> findByAuthorMembername(String membername, Pageable pageable);
     Page<Post> findAll(Specification<Post> spec, Pageable pageable);
-
-//    Page<Post> findByIsPublishedTrue(Pageable pageable);
+    List<Post> findTop30ByOrderByCreateDateDesc();
     //메서드 이름 규칙 중 하나
 //    find: 조회 메서드임을 나타냅니다.
 

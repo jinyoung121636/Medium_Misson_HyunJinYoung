@@ -23,4 +23,3 @@ public class MemberCreateForm {
     @Email
     private String email;
 }
-

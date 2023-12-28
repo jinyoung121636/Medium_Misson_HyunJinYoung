@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +24,17 @@ public class MemberSecurityService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-        Optional<SiteMember>_siteMember = this.memberRepository.findBymembername(username);
+        Optional<Member>_siteMember = this.memberRepository.findBymembername(username);
         if(_siteMember.isEmpty()){
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
-        SiteMember siteMember = _siteMember.get();
+        Member member = _siteMember.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
         if("admin".equals(username)){
             authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue()));
         }else {
             authorities.add(new SimpleGrantedAuthority((MemberRole.USER.getValue())));
         }
-        return new User(siteMember.getMembername(), siteMember.getPassword(), authorities);
+        return new User(member.getMembername(), member.getPassword(), authorities);
     }
 }

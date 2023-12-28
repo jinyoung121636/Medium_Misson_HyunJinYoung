@@ -1,7 +1,7 @@
 package com.ll.medium.domain.comment;
 
 import com.ll.medium.DataNotFoundException;
-import com.ll.medium.domain.member.SiteMember;
+import com.ll.medium.domain.member.Member;
 import com.ll.medium.domain.post.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,11 +15,11 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     //comment 생성
-    public Comment create(Post post, String content, SiteMember siteMember) {
+    public Comment create(Post post, String content, Member member) {
         Comment comment = new Comment();
         comment.setContent(content);
         comment.setCreateDate(LocalDateTime.now());
-        comment.setAuthor(siteMember);
+        comment.setAuthor(member);
         comment.setPost(post);
         this.commentRepository.save(comment);
         return comment;
@@ -46,13 +46,13 @@ public class CommentService {
         this.commentRepository.delete(comment);
     }
 
-    public void vote(Comment comment, SiteMember siteMember){
-        comment.getVoter().add(siteMember);
+    public void vote(Comment comment, Member member){
+        comment.getVoter().add(member);
         this.commentRepository.save(comment);
     }
 
-    public void voteCancle(Comment comment, SiteMember siteMember){
-        comment.getVoter().remove(siteMember);
+    public void voteCancle(Comment comment, Member member){
+        comment.getVoter().remove(member);
         this.commentRepository.save(comment);
     }
 }

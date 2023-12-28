@@ -2,19 +2,16 @@ package com.ll.medium;
 
 import com.ll.medium.domain.comment.Comment;
 import com.ll.medium.domain.comment.CommentRepository;
-import com.ll.medium.domain.member.MemberRepository;
 import com.ll.medium.domain.member.MemberService;
-import com.ll.medium.domain.member.SiteMember;
+import com.ll.medium.domain.member.Member;
 import com.ll.medium.domain.post.Post;
 import com.ll.medium.domain.post.PostRepository;
-import com.ll.medium.domain.post.Post;
 import com.ll.medium.domain.post.PostService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.parameters.P;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -169,7 +166,7 @@ class MediumApplicationTests {
     @Test
     @DisplayName("테스트용 데이터 생성")
     void t14() {
-        SiteMember member = this.memberService.getMember("user2");
+        Member member = this.memberService.getMember("user2");
         for(int i=0; i<5; i++) {
             Post a = new Post();
             a.setAuthor(member);

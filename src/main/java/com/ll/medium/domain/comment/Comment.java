@@ -1,6 +1,6 @@
 package com.ll.medium.domain.comment;
 
-import com.ll.medium.domain.member.SiteMember;
+import com.ll.medium.domain.member.Member;
 import com.ll.medium.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,10 +28,10 @@ public class Comment {
     private Post post;
 
     @ManyToOne
-    private SiteMember author;
+    private Member author;
 
     @ManyToMany
-    Set<SiteMember> voter;
+    Set<Member> voter;
 
 
 }

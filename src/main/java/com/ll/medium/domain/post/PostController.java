@@ -4,13 +4,10 @@ package com.ll.medium.domain.post;
 import com.ll.medium.domain.comment.CommentForm;
 import com.ll.medium.domain.comment.CommentService;
 import com.ll.medium.domain.member.MemberService;
-import com.ll.medium.domain.member.SiteMember;
-import jakarta.persistence.ManyToOne;
+import com.ll.medium.domain.member.Member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,9 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/post")
@@ -70,8 +65,8 @@ public class PostController {
         if (bindingResult.hasErrors()) {
             return "domain/post/post_form";
         }
-        SiteMember siteMember = this.memberService.getMember(principal.getName());
-        this.postService.create(postForm.getSubject(), postForm.getContent(), siteMember);
+        Member member = this.memberService.getMember(principal.getName());
+        this.postService.create(postForm.getSubject(), postForm.getContent(), member);
         return "redirect:/post/list";
     }
 
@@ -140,17 +135,26 @@ public class PostController {
         return "domain/post/post_mylist";
     }
 
+    // newlist(30개)
+    @GetMapping("/new")
+    public String getNewPost(Model model){
+        List<Post> newlist = this.postService.getNewList();
+        model.addAttribute("newlist",newlist);
+        return "domain/post/post_new";
+    }
+
+    //좋아요
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/{id}/like")
     public String postVote(Principal principal, @PathVariable("id") Integer id) {
         Post post = this.postService.getPost(id);
-        SiteMember siteMember = this.memberService.getMember(principal.getName());
+        Member member = this.memberService.getMember(principal.getName());
 
         //좋아요 / 좋아요 취소
-        if (post.getVoter().contains(siteMember)) {
-            this.postService.voteCancle(post, siteMember);
+        if (post.getVoter().contains(member)) {
+            this.postService.voteCancle(post, member);
         } else {
-            this.postService.vote(post, siteMember);
+            this.postService.vote(post, member);
         }
         return String.format("redirect:/post/detail/%s", id);
     }
