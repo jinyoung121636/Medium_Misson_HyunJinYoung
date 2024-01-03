@@ -66,7 +66,7 @@ public class PostController {
             return "domain/post/post_form";
         }
         Member member = this.memberService.getUser(principal.getName());
-        this.postService.create(postForm.getSubject(), postForm.getContent(), member);
+        this.postService.create(postForm.getSubject(), postForm.getContent(), member, postForm.getIsPublished());
         return "redirect:/post/list";
     }
 

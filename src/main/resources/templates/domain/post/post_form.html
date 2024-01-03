@@ -31,10 +31,10 @@
       <div id="editor" class="mt-3 mb-3">
         <textarea class="fs-4" style="width: 700px; min-height: 600px;" type="text" th:field="*{content}" name="content" placeholder="내용을 입력하세요"></textarea>
       </div>
-        <div class="mb-3 form-check">
-          <label class="form-check-label" for="isPublished">공개 여부</label>
-          <input type="checkbox"  class="form-check-input" id="isPublished">
-        </div>
+      <div class="mb-3 form-check">
+        <label class="form-check-label" for="isPublished">비공개</label>
+        <input type="checkbox" th:field="*{isPublished}" class="form-check-input" id="isPublished">
+      </div>
         <div class="flex justify-content-center">
           <input type="submit" style="width: 300px" value="저장하기" class="btn btn-primary my-2 fs-5" >
         </div>

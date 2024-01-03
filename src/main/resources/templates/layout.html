@@ -13,8 +13,8 @@
     <!--테일윈즈-->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 폰트적용-->
-    <link rel="stylesheet" type="text/css" th:href="@{/global.css}">
-    <script src="/global/global.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/global/global.css}">
+    <script th:src="@{/global/global.js}"></script>
 
     <!--폰트어썸-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -34,13 +34,11 @@
     function toastWarning(message) {
         toastr.warning(message);
     }
-</script>
-<script>
+
     function toastNotice(message) {
         toastr.success(message);
     }
-</script>
-<script>
+
     const delete_elements = document.getElementsByClassName("delete");
     Array.from(delete_elements).forEach(function(element) {
         element.addEventListener('click', function () {

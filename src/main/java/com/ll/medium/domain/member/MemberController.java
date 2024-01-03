@@ -26,17 +26,19 @@ public class MemberController {
 
 
     @PostMapping("/join")
-    public String signup(@Valid MemberCreateForm memberCreateForm) {
+    public String signup(@Valid MemberCreateForm memberCreateForm, Model model) {
         String username = memberCreateForm.getUsername();
         String email = memberCreateForm.getEmail();
 
         // 중복 사용자 이름 또는 이메일 확인
         if (memberService.existsByUsernameOrEmail(username, email)) {
+            model.addAttribute("errorMessage","이미 존재하는 회원입니다.");
             return "redirect:/member/join";
         }
 
         // 회원 가입
         Member member= memberService.create(username, email, memberCreateForm.getPassword());
+        model.addAttribute("successMessage","회원가입을 축하합니다.");
         return "redirect:/member/login";
     }
 

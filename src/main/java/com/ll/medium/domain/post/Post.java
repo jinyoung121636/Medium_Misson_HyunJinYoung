@@ -47,4 +47,7 @@ public class Post {
     @ManyToMany
     Set<Member> voter;
 
+    @Column(name = "isPublished")
+    private boolean isPublished;
+
 }

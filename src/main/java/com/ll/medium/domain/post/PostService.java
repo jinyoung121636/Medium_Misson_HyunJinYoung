@@ -37,12 +37,13 @@ public class PostService {
     }
 
     // post 생성
-    public void create(String subject, String content, Member member){
+    public void create(String subject, String content, Member member, boolean isPublished){
         Post post = new Post();
         post.setSubject(subject);
         post.setContent(content);
         post.setCreateDate(LocalDateTime.now());
         post.setAuthor(member);
+        post.setPublished(isPublished);
         this.postRepository.save(post);
     }
 

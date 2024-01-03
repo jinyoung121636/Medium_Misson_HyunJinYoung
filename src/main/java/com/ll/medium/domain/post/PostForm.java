@@ -14,4 +14,14 @@ public class PostForm {
 
     @NotBlank(message = "내용은 필수항목입니다.")
     private String content;
+
+    private boolean isPublished;
+
+    public boolean getIsPublished() {
+        return isPublished;
+    }
+
+    public void setIsPublished(boolean isPublished) {
+        this.isPublished = isPublished;
+    }
 }
