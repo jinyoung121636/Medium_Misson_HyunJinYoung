@@ -31,7 +31,11 @@ public class MemberService {
         if(member.isPresent()){
             return member.get();
         } else {
-            throw new DataNotFoundException("member not found");
+            throw new DataNotFoundException("존재하지 않는 회원입니다.");
         }
+    }
+
+    public boolean existsByUsernameOrEmail(String username, String email) {
+        return memberRepository.existsByUsernameOrEmail(username, email);
     }
 }

@@ -1,17 +1,14 @@
 package com.ll.medium.domain.member;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RequiredArgsConstructor
 @Controller
@@ -25,12 +22,20 @@ public class MemberController {
         return "domain/member/join_form";
     }
 
-    // 회원가입 정보를 저장
+
     @PostMapping("/join")
-    public String signup(@Valid MemberCreateForm memberCreateForm){
-        Member member = memberService.create(memberCreateForm.getUsername(), memberCreateForm.getEmail(), memberCreateForm.getPassword());
-        long id = member.getId();
-        return "redirect:/?msg=No %d member joined.".formatted(id);
+    public String signup(@Valid MemberCreateForm memberCreateForm) {
+        String username = memberCreateForm.getUsername();
+        String email = memberCreateForm.getEmail();
+
+        // 중복 사용자 이름 또는 이메일 확인
+        if (memberService.existsByUsernameOrEmail(username, email)) {
+            return "redirect:/member/join";
+        }
+
+        // 회원 가입
+        Member member= memberService.create(username, email, memberCreateForm.getPassword());
+        return "redirect:/member/login";
     }
 
     // 로그인 템플릿을 불러줌

@@ -31,8 +31,8 @@
 <script th:src="@{/bootstrap.min.js}"></script>  <!-- Bootstrap JS -->
 <th:block layout:fragment="script"></th:block> <!-- 자바스크립트 Start -->
 <script>
-    if (urlParams.msg) {
-        toastNotice(urlParams.msg);
+    function toastNotice(message) {
+        toastr.success(message);
     }
 </script>
 <script>
