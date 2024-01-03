@@ -47,15 +47,4 @@ public class Post {
     @ManyToMany
     Set<Member> voter;
 
-//    @Column(name = "IS_PUBLISHED", nullable = true)
-//    private boolean isPublished;
-//
-//    public Boolean getIsPublished(){
-//        return isPublished;
-//    }
-//
-//    public void setIsPublished(Boolean isPublished){
-//        this.isPublished = isPublished;
-//    }
-
 }

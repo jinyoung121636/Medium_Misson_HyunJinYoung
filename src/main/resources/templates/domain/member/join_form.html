@@ -42,9 +42,6 @@
             form.submit();
         }
     </script>
-    <script>
-
-    </script>
 
     <!--    회원가입 폼-->
     <form style="width: 400px" class="m-auto p-5" th:action="@{/member/join}" th:object="${memberCreateForm}" method="post" onsubmit="submitJoinForm(this); return false;" >

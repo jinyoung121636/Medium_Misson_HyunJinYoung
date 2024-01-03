@@ -12,7 +12,6 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-
     public Member create(
             String username,
             String emaill,
@@ -25,10 +24,9 @@ public class MemberService {
         this.memberRepository.save(member);
         return member;
     }
-
     public Member getUser (String username) {
-        Optional<Member> member  = this.memberRepository.findByusername(username);
-        if(member.isPresent()){
+        Optional<Member> member = this.memberRepository.findByusername(username);
+        if (member.isPresent()) {
             return member.get();
         } else {
             throw new DataNotFoundException("존재하지 않는 회원입니다.");

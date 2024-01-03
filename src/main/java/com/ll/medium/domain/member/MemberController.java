@@ -2,13 +2,15 @@ package com.ll.medium.domain.member;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.util.URLEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.nio.charset.StandardCharsets;
 
 @RequiredArgsConstructor
 @Controller

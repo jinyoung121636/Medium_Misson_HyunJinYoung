@@ -2,9 +2,8 @@
 <div layout:fragment="content" class="container my-3">
     <!--글쓰기 폼-->
     <div class="flex justify-content-center">
-        <form style="width: 700px" th:object="${commentForm}" method="post">
+        <form style="width: 700px" th:object="${commentForm}" method="post" onSubmit="">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <div th:replace="~{form_errors :: formErrorsFragment}"></div>
             <div class="mt-3 mb-3">
                 <textarea class="fs-4" style="width: 700px; min-height: 600px;" type="text" th:field="*{content}" name="content" placeholder="내용을 입력하세요"></textarea>
             </div>
