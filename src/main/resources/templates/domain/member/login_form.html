@@ -1,0 +1,42 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+    <script>
+        function submitloginForm(form){
+            form.username.value = form.username.value.trim();
+            form.password.value = form.password.value.trim();
+
+            if(form.username.value.length == 0){
+                toastWarning('사용자 ID를 입력해주세요');
+                form.username.focus();
+                return;
+            }
+
+            if(form.password.value.length == 0){
+                toastWarning('비밀번호를 입력해주세요');
+                form.password.focus();
+                return;
+            }
+
+            form.submit();
+        }
+    </script>
+
+    <!--로그인 폼-->
+    <form style="width: 350px" class="m-auto p-5" th:action="@{/member/login}" method="post" onsubmit="submitloginForm(this); return false;">
+        <div class="mb-3">
+            <label for="username" class="form-label">사용자ID</label>
+            <input type="text" name="username" id="username" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" name="password" id="password" class="form-control">
+        </div>
+        <div class="p-3 flex justify-content-center">
+            <button type="submit" class="btn btn-warning btn-wide" style="font-size: 20px;">로그인</button>
+        </div>
+        <div class="flex justify-content-center">
+            <p>아직 회원이 아니신가요? <a class="text-blue-500" sec:authorize="isAnonymous()" th:href="@{/member/join}">회원가입</a></p>
+        </div>
+    </form>
+    </div>
+</html>

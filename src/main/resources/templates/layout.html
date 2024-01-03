@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+    <title>Hello, medium!</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <link href="https://jhs512.github.io/toastr/toastr.css" rel="stylesheet">
+    <!--테일윈즈-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 폰트적용-->
+    <link rel="stylesheet" type="text/css" th:href="@{/global/global.css}">
+    <script th:src="@{/global/global.js}"></script>
+
+    <!--폰트어썸-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!--sweetalert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+
+<body>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.14/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+<nav th:replace="~{navbar :: navbarFragment}"></nav> <!--네비게이션바-->
+<th:block layout:fragment="content"></th:block>   <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+<script th:src="@{/bootstrap.min.js}"></script>  <!-- Bootstrap JS -->
+<th:block layout:fragment="script"></th:block> <!-- 자바스크립트 Start -->
+
+<script>
+    function toastWarning(message) {
+        toastr.warning(message);
+    }
+
+    function toastNotice(message) {
+        toastr.success(message);
+    }
+
+    const delete_elements = document.getElementsByClassName("delete");
+    Array.from(delete_elements).forEach(function(element) {
+        element.addEventListener('click', function () {
+            Swal.fire({
+                title: "확인",
+                text: "삭제 하시겠습니까?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "삭제",
+                cancelButtonText: "취소"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.href = this.dataset.uri;
+                }
+            });
+        });
+    });
+
+</script>
+<!-- 자바스크립트 End -->
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-3">
+
+  <script>
+    function submitPostForm(form){
+      form.subject.value = form.subject.value.trim();
+
+      if(form.subject.value.length == 0){
+        toastWarning('제목은 필수항목입니다.');
+        form.subject.focus();
+        return;
+      }
+
+      form.content.value = form.content.value.trim();
+
+      if(form.content.value.length == 0){
+        toastWarning('내용은 필수항목입니다.');
+        form.content.focus();
+        return;
+      }
+      form.submit();
+    }
+  </script>
+  <!--글쓰기 폼-->
+  <div class="flex justify-content-center">
+    <form style="width: 700px" th:object="${postForm}" method="post" onsubmit="submitPostForm(this); return false;">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+      <div>
+        <input class="fs-1 border-bottom" style="width: 700px" type="text" th:field="*{subject}" name="subject" id="subject" placeholder="제목을 입력하세요">
+      </div>
+      <div id="editor" class="mt-3 mb-3">
+        <textarea class="fs-4" style="width: 700px; min-height: 600px;" type="text" th:field="*{content}" name="content" placeholder="내용을 입력하세요"></textarea>
+      </div>
+      <div class="mb-3 form-check">
+        <label class="form-check-label" for="isPublished">비공개</label>
+        <input type="checkbox" th:field="*{isPublished}" class="form-check-input" id="isPublished">
+      </div>
+        <div class="flex justify-content-center">
+          <input type="submit" style="width: 300px" value="저장하기" class="btn btn-primary my-2 fs-5" >
+        </div>
+      </form>
+  </div>
+</div>
+</html>
