@@ -30,7 +30,11 @@
 </div>
 <div class="flex-column" style="width: 700px;" th:if="${isPaidMember == true or isPaidPost == false}">
 <!-- post 제목-->
+    <div class="flex justify-content-between align-items-center">
     <div class="fs-1" th:text="${post.subject}"></div>
+    <span><i th:if="${post.isPublished() == true}" class="fa-solid fa-lock"></i></span>
+    <span><i th:if="${post.isPaid() == true}" class="fa-solid fa-user-lock"></i></span>
+    </div>
     <div class="d-flex justify-content-between align-items-center">
         <div>
         <span class="fs-4 mr-3 text-gray-400" th:if="${post.author != null}" th:text="${post.author.username}"></span>

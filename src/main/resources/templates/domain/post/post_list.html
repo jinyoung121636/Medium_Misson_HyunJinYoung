@@ -22,6 +22,7 @@
                     <div class="flex justify-content-between">
                         <h1 class="text-2xl"><p th:text="${post.subject}"></p></h1>
                         <h1><i th:if="${post.isPublished() == true}" class="fa-solid fa-lock"></i></h1>
+                        <h1><i th:if="${post.isPaid() == true}" class="fa-solid fa-user-lock"></i></h1>
                     </div>
                         <h1 class="badge badge-outline text-sm mb-3 "><p th:if="${post.author != null }" th:text="${post.author.username}"></p></h1>
                         <p class="text-gray-400">
