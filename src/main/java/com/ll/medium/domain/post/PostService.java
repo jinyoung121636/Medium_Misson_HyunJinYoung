@@ -58,9 +58,10 @@ public class PostService {
 
 
     // post 수정
-    public void modify(Post post, String subject, String content){
+    public void modify(Post post, String subject, String content, boolean isPublished){
         post.setSubject(subject);
         post.setContent(content);
+        post.setPublished(isPublished);
         this.postRepository.save(post);
     }
 

@@ -33,4 +33,15 @@ public class Member {
     private LocalDateTime modifyDate;
     @Column(unique = true)
     private String email;
+
+    @Column(name = "isPaid")
+    private boolean isPaid;
+    // 추가: 권한 열거형
+    @Enumerated(EnumType.STRING)
+    private MemberRole role;
+
+    public Member() {
+        this.isPaid = false; // 기본값은 false
+        this.role = MemberRole.USER; // 기본 권한은 USER
+    }
 }

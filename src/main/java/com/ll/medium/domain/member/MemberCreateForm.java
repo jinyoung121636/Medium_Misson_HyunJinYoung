@@ -1,5 +1,7 @@
 package com.ll.medium.domain.member;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,4 +21,12 @@ public class MemberCreateForm {
     @NotBlank
     @Email
     private String email;
+
+    private boolean isPaid;
+
+    public boolean getIsPaid() {
+        return isPaid;
+    }
+
+    public void setIsPaid(boolean isPaid) {this.isPaid = isPaid;}
 }
