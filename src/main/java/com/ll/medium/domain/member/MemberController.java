@@ -1,13 +1,11 @@
 package com.ll.medium.domain.member;
 
+import com.ll.medium.domain.post.Post;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -50,7 +48,7 @@ public class MemberController {
 
     // membership 가입
     @GetMapping("/membership")
-    public String membershipJoin(MemberCreateForm memberCreateForm) {
+    public String membershipJoin(MemberCreateForm memberCreateForm){
         return "domain/member/membership_form";
     }
 

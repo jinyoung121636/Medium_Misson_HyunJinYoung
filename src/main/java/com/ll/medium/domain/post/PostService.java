@@ -37,13 +37,15 @@ public class PostService {
     }
 
     // post 생성
-    public void create(String subject, String content, Member member, boolean isPublished){
+    public void create(String subject, String content, Member member, boolean isPublished, boolean isPaid){
         Post post = new Post();
         post.setSubject(subject);
         post.setContent(content);
         post.setCreateDate(LocalDateTime.now());
         post.setAuthor(member);
         post.setPublished(isPublished);
+        member.setPaid(isPaid);
+        post.synchronizeIsPaid();
         this.postRepository.save(post);
     }
 
@@ -62,6 +64,7 @@ public class PostService {
         post.setSubject(subject);
         post.setContent(content);
         post.setPublished(isPublished);
+        post.synchronizeIsPaid();
         this.postRepository.save(post);
     }
 
