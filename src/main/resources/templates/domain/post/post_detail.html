@@ -32,8 +32,10 @@
 <!-- post 제목-->
     <div class="flex justify-content-between align-items-center">
     <div class="fs-1" th:text="${post.subject}"></div>
-    <span><i th:if="${post.isPublished() == true}" class="fa-solid fa-lock"></i></span>
-    <span><i th:if="${post.isPaid() == true}" class="fa-solid fa-user-lock"></i></span>
+        <div class="flex">
+            <h1><i th:if="${post.isPublished() == true}" class="fa-solid fa-lock mr-2"></i></h1>
+            <h1><i th:if="${post.isPaid() == true}" class="fa-solid fa-user-lock"></i></h1>
+        </div>
     </div>
     <div class="d-flex justify-content-between align-items-center">
         <div>
