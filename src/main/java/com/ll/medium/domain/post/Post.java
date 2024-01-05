@@ -47,7 +47,16 @@ public class Post {
     @ManyToMany
     Set<Member> voter;
 
+    // 비공개 여부 (true = 비공개, false = 공개)
     @Column(name = "isPublished")
     private boolean isPublished;
 
+    @Column(name = "isPaid")
+    private boolean isPaid;
+
+    public void synchronizeIsPaid(){
+        if(author != null){
+            this.isPaid = author.isPaid();
+        }
+    }
 }

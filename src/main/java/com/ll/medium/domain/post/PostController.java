@@ -3,6 +3,7 @@ package com.ll.medium.domain.post;
 
 import com.ll.medium.domain.comment.CommentForm;
 import com.ll.medium.domain.comment.CommentService;
+import com.ll.medium.domain.member.MemberCreateForm;
 import com.ll.medium.domain.member.MemberService;
 import com.ll.medium.domain.member.Member;
 import jakarta.validation.Valid;
@@ -42,10 +43,22 @@ public class PostController {
 
     // 글 상세보기
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
+    public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm, Principal principal) {
         postService.increaseViewCount(id);
+
         Post post = this.postService.getPost(id);
+
+        boolean isPaidMember = false;
+        if (principal != null) {
+            String username = principal.getName();
+            Member member = memberService.getUser(username);
+            isPaidMember = member.isPaid();
+        }
+        boolean isPaidPost = post.isPaid();
+
         model.addAttribute("post", post);
+        model.addAttribute("isPaidMember", isPaidMember);
+        model.addAttribute("isPaidPost", isPaidPost);
         return "domain/post/post_detail";
     }
 
@@ -66,7 +79,7 @@ public class PostController {
             return "domain/post/post_form";
         }
         Member member = this.memberService.getUser(principal.getName());
-        this.postService.create(postForm.getSubject(), postForm.getContent(), member, postForm.getIsPublished());
+        this.postService.create(postForm.getSubject(), postForm.getContent(), member, postForm.getIsPublished(), member.isPaid());
         return "redirect:/post/list";
     }
 
@@ -84,6 +97,7 @@ public class PostController {
         }
         postForm.setSubject(post.getSubject());
         postForm.setContent(post.getContent());
+        postForm.setIsPublished(post.isPublished());
         return "domain/post/post_form";
     }
 
@@ -102,7 +116,7 @@ public class PostController {
         if (!post.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
-        this.postService.modify(post, postForm.getSubject(), postForm.getContent());
+        this.postService.modify(post, postForm.getSubject(), postForm.getContent(), postForm.getIsPublished());
         return String.format("redirect:/post/detail/%s", id);
     }
 
@@ -142,6 +156,7 @@ public class PostController {
         model.addAttribute("newlist",newlist);
         return "domain/post/post_new";
     }
+
 
     //좋아요
     @PreAuthorize("isAuthenticated()")

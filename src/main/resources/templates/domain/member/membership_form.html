@@ -1,0 +1,13 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="container my-5">
+    <form style="width: 400px" class="m-auto p-5" th:action="@{/member/membership}" th:object="${memberCreateForm}" method="post" onsubmit="submitMembershipForm(this); return false;">
+    <div class="mb-3 form-check">
+        <label class="form-check-label" for="isPaid">멤버쉽회원으로 신청 하시겠습니까?</label>
+        <input type="checkbox" th:field="*{isPaid}" class="form-check-input" id="isPaid">
+    </div>
+    <div class="p-3 flex justify-content-center">
+        <button type="submit" class="btn btn-success btn-wide">신청완료</button>
+    </div>
+    </form>
+</div>
+</html>
